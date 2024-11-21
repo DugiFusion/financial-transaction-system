@@ -10,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{BB76
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transaction", "Transaction", "{6E6C8321-9698-4693-8185-67E83BA0EA76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions", "Backend\Services\Transactions\Transactions.csproj", "{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.API", "Backend\Services\Transactions.API\Transactions.API.csproj", "{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotGateway.API", "Backend\OcelotGateway.API\OcelotGateway.API.csproj", "{E408EC17-A492-460C-97F7-62FE0A26A3A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,11 +24,16 @@ Global
 		{BB762E1E-C628-4E6C-874D-88CE1E0C7518} = {16529D3A-3390-4276-8C71-0163CC6EAA48}
 		{6E6C8321-9698-4693-8185-67E83BA0EA76} = {DB55B397-2837-44D6-B40A-4493F673B889}
 		{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E} = {6E6C8321-9698-4693-8185-67E83BA0EA76}
+		{E408EC17-A492-460C-97F7-62FE0A26A3A9} = {BB762E1E-C628-4E6C-874D-88CE1E0C7518}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E408EC17-A492-460C-97F7-62FE0A26A3A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E408EC17-A492-460C-97F7-62FE0A26A3A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E408EC17-A492-460C-97F7-62FE0A26A3A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E408EC17-A492-460C-97F7-62FE0A26A3A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
