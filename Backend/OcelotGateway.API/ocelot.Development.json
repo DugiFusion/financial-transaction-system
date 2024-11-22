@@ -1,29 +1,25 @@
 {
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5001"
+  },
   "Routes": [
-    //Transaction API
+
     {
-      "DownstreamPathTemplate": "/api/v1/Transactions/{accountId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "transaction.api",
-          "Port": "8080"
-        }
-      ],
-      "UpstreamPathTemplate": "/Transactions/{accountId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
+      "UpstreamPathTemplate": "/gateway/transactions",
+      "UpstreamHttpMethod": [ "GET" ],
+
       "DownstreamPathTemplate": "/api/v1/Transactions",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "transaction.api",
-          "Port": "8080"
+          "Host": "localhost",
+          "Port": "5002"
         }
       ],
-      "UpstreamPathTemplate": "/Transactions",
-      "UpstreamHttpMethod": [ "GET" ]
+      "FileCacheOptions": {
+        "TtlSeconds": 20
+      }
+
     }
   ]
 }
