@@ -8,9 +8,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{1652
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{BB762E1E-C628-4E6C-874D-88CE1E0C7518}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transactions", "Transactions", "{6E6C8321-9698-4693-8185-67E83BA0EA76}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transaction", "Transaction", "{6E6C8321-9698-4693-8185-67E83BA0EA76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.API", "Backend\Services\Transactions.API\Transactions.API.csproj", "{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transaction.API", "Backend\Services\Transaction.API\Transaction.API.csproj", "{2EBEE7F0-00DE-43C6-8C3A-EC0CE383686E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotGateway.API", "Backend\OcelotGateway.API\OcelotGateway.API.csproj", "{E408EC17-A492-460C-97F7-62FE0A26A3A9}"
 EndProject

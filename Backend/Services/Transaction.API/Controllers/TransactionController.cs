@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
+using Transactions.Repositories;
+using Transactions.Repositories.Interfaces;
 
 namespace Transactions.Controllers;
 
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class TransactionsController : ControllerBase
+    public class TransactionController : ControllerBase
     {
-
-        public TransactionsController()
+        private readonly ITransactionRepository _transactionRepository;
+        public TransactionController(ITransactionRepository transactionRepository)
         {
+            _transactionRepository = transactionRepository;
         }
 
         [HttpGet]
@@ -18,10 +21,11 @@ namespace Transactions.Controllers;
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public IActionResult GetByAccountId()
+        public async Task<IActionResult> GetByAccountId()
         {
             //   var result = await _transactionService.GetByAccountId(accountId);
             //  return Ok(result);
-            return Ok("Transactions");
+            var result = await _transactionRepository.GetByAccountId(Guid.NewGuid());
+            return Ok(result);
         }
     }
