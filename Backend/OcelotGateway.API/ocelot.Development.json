@@ -5,10 +5,10 @@
   "Routes": [
 
     {
-      "UpstreamPathTemplate": "/gateway/transactions",
+      "UpstreamPathTemplate": "/gateway/transaction",
       "UpstreamHttpMethod": [ "GET" ],
 
-      "DownstreamPathTemplate": "/api/v1/Transactions",
+      "DownstreamPathTemplate": "/api/v1/Transaction",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
