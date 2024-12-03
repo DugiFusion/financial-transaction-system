@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Transaction.Data.DTOs;
 using Transactions.Repositories;
 using Transactions.Repositories.Interfaces;
 
@@ -15,7 +16,7 @@ namespace Transactions.Controllers;
         }
 
         [HttpGet]
-        // [ProducesResponseType(typeof(List<TransactionDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<TransactionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -23,8 +24,7 @@ namespace Transactions.Controllers;
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetByAccountId()
         {
-            //   var result = await _transactionService.GetByAccountId(accountId);
-            //  return Ok(result);
+            
             var result = await _transactionRepository.GetByAccountId(Guid.NewGuid());
             return Ok(result);
         }

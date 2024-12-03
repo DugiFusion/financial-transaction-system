@@ -20,17 +20,17 @@ public class TransactionRepository : ITransactionRepository
         //     .ToListAsync();
         // return transactions;
 
-        // return new Entities.Transaction[]
-        // {
-        //     new Entities.Transaction()
-        //     {
-        //         Id = Guid.NewGuid(),
-        //         AccountId = Guid.Empty,
-        //         Amount = 100,
-        //         CreatedDate = DateTime.Now,
-        //         Type = 1
-        //     }
-        // };
+        return new Entities.Transaction[]
+        {
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = Guid.Empty,
+                Amount = 100,
+                CreatedDate = DateTime.Now,
+                Type = 1
+            }
+        };
         
         return await _transactionContext
             .Transactions
