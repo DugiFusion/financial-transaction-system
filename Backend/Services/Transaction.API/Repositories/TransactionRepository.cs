@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Transaction.Data;
+using Transactions.Entities.Enumerations;
 using Transactions.Repositories.Interfaces;
 
 namespace Transactions.Repositories;
@@ -25,10 +26,18 @@ public class TransactionRepository : ITransactionRepository
             new Entities.Transaction()
             {
                 Id = Guid.NewGuid(),
-                AccountId = Guid.Empty,
+                AccountId = accountId,
                 Amount = 100,
                 CreatedDate = DateTime.Now,
-                Type = 1
+                Type = TransactionType.Deposit
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                Amount = 20,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Withdraw
             }
         };
         
