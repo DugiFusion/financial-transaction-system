@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transaction.API", "Backend\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotGateway.API", "Backend\OcelotGateway.API\OcelotGateway.API.csproj", "{E408EC17-A492-460C-97F7-62FE0A26A3A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reporting.API", "Backend\Services\Reporting.API\Reporting.API.csproj", "{E5E85740-F909-41EF-9734-F89DB336BF2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,5 +35,9 @@ Global
 		{E408EC17-A492-460C-97F7-62FE0A26A3A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E408EC17-A492-460C-97F7-62FE0A26A3A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E408EC17-A492-460C-97F7-62FE0A26A3A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5E85740-F909-41EF-9734-F89DB336BF2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5E85740-F909-41EF-9734-F89DB336BF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5E85740-F909-41EF-9734-F89DB336BF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5E85740-F909-41EF-9734-F89DB336BF2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

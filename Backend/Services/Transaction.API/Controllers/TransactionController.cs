@@ -15,17 +15,17 @@ namespace Transactions.Controllers;
             _transactionRepository = transactionRepository;
         }
 
-        [HttpGet]
+        [HttpGet ("{accountId}")]
         [ProducesResponseType(typeof(List<TransactionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetByAccountId()
+        public async Task<IActionResult> GetByAccountId(Guid accountId)
         {
             
-            var result = await _transactionRepository.GetByAccountId(Guid.NewGuid());
+            var result = await _transactionRepository.GetByAccountId(accountId);
             return Ok(result);
         }
     }
