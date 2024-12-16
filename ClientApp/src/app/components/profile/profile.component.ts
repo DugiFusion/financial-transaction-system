@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule } from "@angular/router";
 
 @Component({
-  selector: 'app-transactions',
+  selector: 'app-profile',
   imports: [
     RouterLinkActive,
     RouterLink,
     RouterModule
   ],
-  templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.css'
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.css'
 })
-export class TransactionsComponent {
+export class ProfileComponent {
 
 }
