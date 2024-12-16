@@ -1,8 +1,7 @@
-
 <!-- Main Content -->
-<div class="container content">
+<div class="container content d-flex justify-content-center" style="height: 100vh; width: 100%;">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <!-- Transaction Form -->
       <h3>Add Transaction</h3>
       <form>
@@ -25,44 +24,72 @@
       </form>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
+      <!-- Filter Section -->
+      <div class="mb-4">
+        <h4>Filter Transactions</h4>
+        <form class="row g-3 align-items-end">
+          <div class="col-md-4">
+            <label for="filterType" class="form-label">Transaction Type</label>
+            <select class="form-select" id="filterType">
+              <option value="">All</option>
+              <option value="credit">Credit</option>
+              <option value="debit">Debit</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="filterDate" class="form-label">Date</label>
+            <input type="date" class="form-control" id="filterDate">
+          </div>
+          <div class="col-md-4">
+            <label for="filterAmount" class="form-label">Amount Range</label>
+            <input type="text" class="form-control" id="filterAmount" placeholder="e.g., 100-500">
+          </div>
+          <div class="col-12 text-end">
+            <button type="button" class="btn btn-primary">
+              <i class="bi bi-funnel"></i> Apply Filters
+            </button>
+          </div>
+        </form>
+      </div>
+
       <!-- Transaction Table -->
       <h3>Transaction History</h3>
-      <table class="table table-striped">
-        <thead class="table-dark">
-        <tr>
-          <th>#</th>
-          <th>Card Type</th>
-          <th>Amount</th>
-          <th>To / From</th>
-          <th>Transaction Type</th>
-          <th>Note</th>
-          <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>1</td>
-          <td>Credit</td>
-          <td>500 EUR</td>
-          <td>IT Inc.</td>
-          <td>SEPA</td>
-          <td>Salary</td>
-          <td>2024-12-05</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Debit</td>
-          <td>100 EUR</td>
-          <td>LIDL</td>
-          <td>Withdrawal</td>
-          <td> / </td>
-          <td>2024-12-06</td>
-        </tr>
-        </tbody>
-      </table>
+      <div style="overflow-x: auto;">
+        <table class="table table-striped w-100">
+          <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Card Type</th>
+            <th>Amount</th>
+            <th>To / From</th>
+            <th>Transaction Type</th>
+            <th>Date</th>
+            <th>Note</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>1</td>
+            <td>Credit</td>
+            <td>500 EUR</td>
+            <td>IT Inc.</td>
+            <td>SEPA</td>
+            <td>2024-12-05</td>
+            <td>Salary</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Debit</td>
+            <td>100 EUR</td>
+            <td>LIDL</td>
+            <td>Withdrawal</td>
+            <td>2024-12-06</td>
+            <td> / </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
-
-
