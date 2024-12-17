@@ -42,6 +42,126 @@ public class TransactionRepository : ITransactionRepository
                 CreatedDate = DateTime.Now,
                 Type = TransactionType.Withdraw,
                 Note = "Initial withdraw"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 100,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Deposit,
+                Note = "Initial deposit"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 20,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Withdraw,
+                Note = "Initial withdraw"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 100,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Deposit,
+                Note = "Initial deposit"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 20,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Withdraw,
+                Note = "Initial withdraw"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 100,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Deposit,
+                Note = "Initial deposit"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 20,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Withdraw,
+                Note = "Initial withdraw"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 100,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Deposit,
+                Note = "Initial deposit"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 20,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Withdraw,
+                Note = "Initial withdraw"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 100,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Deposit,
+                Note = "Initial deposit"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 20,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Withdraw,
+                Note = "Initial withdraw"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 100,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Deposit,
+                Note = "Initial deposit"
+            },
+            new Entities.Transaction()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CustomerId = Guid.NewGuid(),
+                Amount = 20,
+                CreatedDate = DateTime.Now,
+                Type = TransactionType.Withdraw,
+                Note = "Initial withdraw"
             }
         };
         

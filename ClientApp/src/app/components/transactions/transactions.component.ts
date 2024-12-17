@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TransactionsService } from '../../services/transactions/transactions.service';
 import { Transaction } from '../../models/transaction';
-import { DatePipe, NgFor } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
   imports: [
-    NgFor,
     DatePipe,
     MatPaginatorModule,
     MatTableModule
@@ -17,7 +16,8 @@ import { DatePipe, NgFor } from '@angular/common';
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.css']
 })
-export class TransactionsComponent implements OnInit {
+
+export class TransactionsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['index', 'cardType', 'amount', 'customerId', 'type', 'createdDate', 'note'];
   dataSource = new MatTableDataSource<Transaction>([]);
 
@@ -29,9 +29,12 @@ export class TransactionsComponent implements OnInit {
     this.transactionsService.get().subscribe({
       next: (data) => {
         this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
       },
       error: (err) => console.error('Error:', err),
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 }
