@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DatePipe } from "@angular/common";
 import { RouterLink } from "@angular/router";
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-footer',
   imports: [DatePipe, RouterLink],
@@ -9,5 +10,5 @@ import { RouterLink } from "@angular/router";
 })
 export class FooterComponent {
   today: number = Date.now();
-
+  environmentName = environment.env;
 }

@@ -26,7 +26,8 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
   constructor(private readonly transactionsService: TransactionsService) { }
 
   ngOnInit(): void {
-    this.transactionsService.get().subscribe({
+    const userId = '12cd25aa-4022-4a0c-a173-e597b390dcc3';
+    this.transactionsService.get(userId).subscribe({
       next: (data) => {
         this.dataSource.data = data;
       },
