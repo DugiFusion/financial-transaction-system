@@ -1,0 +1,55 @@
+<!-- Main Content -->
+<div class="container content d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="row justify-content-center w-100">
+    <div class="col-lg-6 col-md-8 col-12">
+      <!-- Profile Card Wrapper -->
+      <div class="card shadow-lg p-4 rounded">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3 class="text-primary">Welcome, John!</h3>
+          <div class="rounded-circle bg-secondary d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
+            <i class="bi bi-person" style="font-size: 24px; color: white;"></i>
+          </div>
+        </div>
+
+
+        <hr class="mb-4">
+
+        <!-- Profile Details -->
+        <div class="mb-3">
+          <label for="name" class="form-label"><i class="bi bi-person"></i> Name</label>
+          <input type="text" class="form-control" id="name" value="John" disabled>
+        </div>
+
+        <div class="mb-3">
+          <label for="surname" class="form-label"><i class="bi bi-person-fill"></i> Surname</label>
+          <input type="text" class="form-control" id="surname" value="Doe" disabled>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label"><i class="bi bi-envelope"></i> Email</label>
+          <input type="email" class="form-control" id="email" value="john.doe@example.com" disabled>
+        </div>
+
+        <div class="mb-3">
+          <label for="pan" class="form-label"><i class="bi bi-card-text"></i> Permanent Account Number (PAN)</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="pan" value="ABCDE1234F" disabled>
+            <span class="input-group-text bg-light text-muted"><i class="bi bi-shield-lock"></i></span>
+          </div>
+        </div>
+
+        <hr class="mb-4">
+
+        <!-- Quick Actions -->
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i> Edit Profile</button>
+          <button class="btn btn-outline-secondary" routerLink="/transactions" routerLinkActive="active">
+            <i class="bi bi-currency-exchange"></i> View Transactions
+          </button>
+          <button class="btn btn-outline-danger"><i class="bi bi-box-arrow-right"></i> Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
