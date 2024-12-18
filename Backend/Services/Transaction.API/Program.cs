@@ -11,6 +11,21 @@ using Transactions.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine($"**********************************************************\n" +
+                  $"**********************************************************\n\n" +
+                  $"STARTING TRANSACTION SERVICE IN {builder.Environment.EnvironmentName} MODE\n\n" +
+                  $"**********************************************************\n" +
+                  $"**********************************************************\n");
+
+
+
+
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -18,7 +33,15 @@ builder.Services.AddOpenApi();
 //builder.Services.AddEndpointsApiExplorer();
 
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        config => config
+            .AllowAnyOrigin()
+            // .WithOrigins("http://localhost:4200") // Frontend url
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 
 
@@ -49,32 +72,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transaction.API v1"));
 }
 
+app.UseCors("AllowSpecificOrigin");
+
+
 app.MapControllers();
 
 app.UseHttpsRedirection();
 
-// var summaries = new[]
-// {
-//     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-// };
 
-// app.MapGet("/weatherforecast", () =>
-//     {
-//         var forecast = Enumerable.Range(1, 5).Select(index =>
-//                 new WeatherForecast
-//                 (
-//                     DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-//                     Random.Shared.Next(-20, 55),
-//                     summaries[Random.Shared.Next(summaries.Length)]
-//                 ))
-//             .ToArray();
-//         return forecast;
-//     })
-//     .WithName("GetWeatherForecast");
 
 app.Run();
 
-// record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-// {
-//     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-// }
