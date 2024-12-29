@@ -15,7 +15,7 @@ namespace Transactions.Controllers;
             _transactionRepository = transactionRepository;
         }
 
-        [HttpGet ("{accountId}")]
+        [HttpGet ("{accountId}")] 
         [ProducesResponseType(typeof(List<TransactionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -24,7 +24,6 @@ namespace Transactions.Controllers;
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetByAccountId(Guid accountId)
         {
-            
             var result = await _transactionRepository.GetByAccountId(accountId);
             return Ok(result);
         }
