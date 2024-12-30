@@ -11,11 +11,16 @@ namespace Transactions.Controllers;
     [ApiController]
     public class TransactionController : ControllerBase
     {
+        
         private readonly ITransactionRepository _transactionRepository;
-        public TransactionController(ITransactionRepository transactionRepository)
+        private readonly ILogger<TransactionController> _logger;
+
+        public TransactionController(ITransactionRepository transactionRepository, ILogger<TransactionController> logger)
         {
             _transactionRepository = transactionRepository;
+            _logger = logger;
         }
+
 
         [HttpGet ("{accountId}")] 
         [ProducesResponseType(typeof(List<TransactionDto>), StatusCodes.Status200OK)]
@@ -30,24 +35,28 @@ namespace Transactions.Controllers;
             return Ok(result);
         }
         
+        
         [HttpPost]
-       // [ProducesResponseType(typeof(List<TransactionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> CreateTransaction() // [FromBody] TransactionDto transactionDto
+        public async Task<IActionResult> CreateTransaction([FromBody] TransactionDto transactionDto)
         {
-            var transactionDto = new TransactionDto()
+            if (transactionDto == null)
             {
-                Id = Guid.NewGuid(),
-                AccountId = Guid.NewGuid(),
-                CustomerId = Guid.NewGuid(),
-                Amount = 12.344,
-                CreatedDate = DateTime.Now,
-                Type = TransactionType.Withdraw,
-                Note = "Lidl shopping"
-            };
+                _logger.LogError("Transaction data is null");
+                return BadRequest("Transaction data is null");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state: {ModelState}", ModelState);
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Received transaction: {TransactionDto}", transactionDto);
+
             var result = await _transactionRepository.CreateTransaction(transactionDto);
             return Ok(result);
         }

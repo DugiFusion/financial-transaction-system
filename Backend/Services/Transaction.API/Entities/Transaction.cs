@@ -8,9 +8,9 @@ public class Transaction
     [Column("id")]
     public Guid Id { get; set; }
     [Column("account_id")]
-    public Guid? AccountId { get; set; }
+    public Guid AccountId { get; set; }
     [Column("customer_id")]
-    public Guid? CustomerId { get; set; }
+    public Guid CustomerId { get; set; }
 
     [Column("amount")]
     public double Amount { get; set; }
@@ -19,9 +19,9 @@ public class Transaction
     public string? Note { get; set; }
     
     [Column("type")] 
-    public TransactionType? Type { get; set; }
+    public TransactionType Type { get; set; }
 
     [Column("created_date")]
 
-    public DateTime? CreatedDate { get; set; }
+    public DateTime CreatedDate { get; set; }
 }
