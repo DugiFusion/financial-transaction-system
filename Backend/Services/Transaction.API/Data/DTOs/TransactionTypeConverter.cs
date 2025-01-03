@@ -13,6 +13,8 @@ namespace Transactions.Entities.Enumerations
             {
                 "Deposit" => TransactionType.Deposit,
                 "Withdraw" => TransactionType.Withdraw,
+                "0" => TransactionType.Deposit,
+                "1" => TransactionType.Withdraw,
                 _ => throw new JsonException($"Invalid value for TransactionType: {value}")
             };
         }

@@ -29,7 +29,7 @@ namespace Transactions.Controllers;
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetByAccountId(Guid accountId)
+        public async Task<IActionResult> GetByAccountId(string accountId)
         {
             var result = await _transactionRepository.GetByAccountId(accountId);
             return Ok(result);
@@ -37,6 +37,7 @@ namespace Transactions.Controllers;
         
         
         [HttpPost]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -64,7 +65,20 @@ namespace Transactions.Controllers;
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTransaction(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                _logger.LogError("Invalid transaction ID");
+                return BadRequest("Invalid transaction ID");
+            }
+
             var result = await _transactionRepository.DeleteTransaction(id);
-            return Ok(result);
+            if (result == 1)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }

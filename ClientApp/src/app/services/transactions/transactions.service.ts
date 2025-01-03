@@ -13,6 +13,9 @@ export class TransactionsService {
   get(userId: string): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(`${this.apiUrl}/transaction/${userId}`);
   }
+  delete(id: string): Observable<number> {
+    return this.http.delete<number>(`${this.apiUrl}/transaction/${id}`);
+  }
 
   insert(transaction: Transaction): Observable<Transaction> {
     // console.log('Transaction to insert:', transaction);

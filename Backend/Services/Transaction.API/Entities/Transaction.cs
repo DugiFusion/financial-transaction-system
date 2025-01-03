@@ -8,9 +8,9 @@ public class Transaction
     [Column("id")]
     public Guid Id { get; set; }
     [Column("account_id")]
-    public Guid AccountId { get; set; }
+    public string AccountId { get; set; }
     [Column("customer_id")]
-    public Guid CustomerId { get; set; }
+    public string CustomerId { get; set; }
 
     [Column("amount")]
     public double Amount { get; set; }
