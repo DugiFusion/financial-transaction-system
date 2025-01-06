@@ -17,19 +17,19 @@ COPY . .
 RUN npm run build:prod
 
 # Stage 2: Runtime
-FROM nginx:alpine AS runtime
+FROM node:18 AS runtime
 
-# Remove the default Nginx configuration file
-RUN rm /etc/nginx/conf.d/default.conf
+# Set working directory inside the container
+WORKDIR /usr/src/app
 
-# Copy your custom Nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d
+# Install a lightweight static server
+RUN npm install -g serve
 
 # Copy Angular build files from the build stage
-COPY --from=build /usr/src/app/dist/client-app/browser /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/client-app/browser ./dist
 
-# Expose port 80 for the container
-EXPOSE 80
+# Expose port 8080 for the container
+EXPOSE 8080
 
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+# Use the static server to serve the Angular app
+CMD ["serve", "-s", "dist", "-l", "8080"]
