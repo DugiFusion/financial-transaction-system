@@ -3,9 +3,11 @@
     "BaseUrl": "http://localhost:5000"
   },
   "Routes": [
+
     {
       "UpstreamPathTemplate": "/gateway/transaction/{accountId}",
-      "UpstreamHttpMethod": ["GET"],
+      "UpstreamHttpMethod": [ "GET" ],
+
       "DownstreamPathTemplate": "/api/v1/Transaction/{accountId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -17,6 +19,7 @@
       "FileCacheOptions": {
         "TtlSeconds": 20
       }
+
     }
   ]
 }

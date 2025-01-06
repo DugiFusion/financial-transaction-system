@@ -10,17 +10,17 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy the csproj and restore dependencies
-COPY ["OcelotGateway.API.csproj", "."]
-RUN dotnet restore "OcelotGateway.API.csproj"
+COPY ["Backend/Services/Transactions/Transactions.csproj", "Backend/Services/Transactions/"]
+RUN dotnet restore "Backend/Services/Transactions/Transactions.csproj"
 
 # Copy the rest of the application and build it
 COPY . .
-WORKDIR "/src"
-RUN dotnet build "OcelotGateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Backend/Services/Transactions"
+RUN dotnet build "Transactions.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Publish the application
 FROM build AS publish
-RUN dotnet publish "OcelotGateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Transactions.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Final image with the runtime-only .NET environment
 FROM base AS final
@@ -30,4 +30,4 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Set the entry point for the container
-ENTRYPOINT ["dotnet", "OcelotGateway.API.dll"]
+ENTRYPOINT ["dotnet", "Transactions.dll"]

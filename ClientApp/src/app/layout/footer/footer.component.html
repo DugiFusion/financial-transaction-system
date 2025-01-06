@@ -1,0 +1,22 @@
+<footer class="bg-primary card-footer text-white text-center py-3 mt-4">
+  <div class="container text-center">
+    <a class="logo-font d-block mb-2 text-white" routerLink="/"><b>Bank Application</b></a>
+    <span class="attribution d-block">
+      &copy; {{ today | date: "yyyy" }}. Bank application for
+      <a class="text-white" href="https://github.com/DugiFusion/financial-transaction-system">Cloud Native project</a>.
+      Code licensed under UNIVERSITY OF LJUBLJANA, FRI.
+    </span>
+
+    <!-- Environment Tab -->
+    <div class="d-inline-block mt-3">
+      <div class="card text-dark bg-light" style="width: auto; display: inline-block;">
+        <div class="card-body py-2 px-3">
+          <small class="card-text">
+            Environment: <strong>{{ environmentName }}</strong>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+

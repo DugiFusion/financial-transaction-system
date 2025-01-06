@@ -372,3 +372,6 @@ FodyWeavers.xsd
 
 # IntelliJ IDEA
 .idea/
+
+# Global config for SDK
+global.json
