@@ -7,7 +7,7 @@
       "UpstreamPathTemplate": "/gateway/transaction/{accountId}",
       "UpstreamHttpMethod": ["GET"],
       "DownstreamPathTemplate": "/api/v1/Transaction/{accountId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",

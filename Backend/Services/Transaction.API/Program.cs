@@ -44,10 +44,10 @@ builder.Services.AddCors(options =>
 });
 
 
-
+var connectionString = builder.Configuration.GetConnectionString("TransactionDatabase");
 builder.Services.AddDbContext<TransactionContext>(options =>
 {
-    options.UseSqlServer("Server=DUGI\\SQLEXPRESS;Database=TransactionsDB;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseSqlServer(connectionString);
 });
 
 

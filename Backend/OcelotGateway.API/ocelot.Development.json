@@ -9,7 +9,7 @@
       "UpstreamHttpMethod": [ "GET" ],
 
       "DownstreamPathTemplate": "/api/v1/Transaction/{accountId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -20,6 +20,38 @@
         "TtlSeconds": 20
       }
 
+    },
+    {
+      
+        "UpstreamPathTemplate": "/gateway/transaction", 
+        "UpstreamHttpMethod": [ "POST" ],
+    
+        "DownstreamPathTemplate": "/api/v1/Transaction",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+            "Host": "localhost",
+            "Port": "5001"
+            }
+        ],
+        "FileCacheOptions": {
+            "TtlSeconds": 20
+        }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/transaction/{transactionId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/api/v1/Transaction/{transactionId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 20
+      }
     }
   ]
 }
