@@ -19,7 +19,7 @@ spec:
 
       containers:
       - name: angular-app
-        image: dugi888/angular-app:1.0 # Replace with your actual image
+        image: dugi888/angular-app:1.0 # Replace THIS
         ports:
         - containerPort: 8080
         readinessProbe:
