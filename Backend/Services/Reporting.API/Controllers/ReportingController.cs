@@ -31,6 +31,20 @@ public class ReportingController: ControllerBase
         return Ok(result);
     }
     
+    [HttpGet("getFile/{reportId}")]
+    [ProducesResponseType(typeof(List<Report>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public async Task<IActionResult> GetFileByReportId(Guid reportId)
+    {
+        var result = await _reportRepository.GetFileByReportId(reportId);
+        return Ok(result);
+    }
+    
+    
     
      
     [HttpDelete("{id}")]
@@ -51,4 +65,6 @@ public class ReportingController: ControllerBase
         return NotFound();
             
     }
+    
+    
 }

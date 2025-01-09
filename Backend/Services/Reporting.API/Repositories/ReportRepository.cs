@@ -1,4 +1,6 @@
 using System.Text;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Stream.Client.AMQP;
 using Reporting.API.Entities;
@@ -12,12 +14,13 @@ public class ReportRepository : IReportRepository
 {
     private readonly ReportsContext _reportsContext;
     private readonly ReportFilesContext _reportFilesContext;
+    private readonly CombinedContext _context;
 
-
-    public ReportRepository(ReportsContext reportsContext, ReportFilesContext reportFilesContext)
+    public ReportRepository(ReportsContext reportsContext, ReportFilesContext reportFilesContext, CombinedContext context)
     {
         _reportsContext = reportsContext;
         _reportFilesContext = reportFilesContext;
+        _context = context;
     }
      
     public async Task<IEnumerable<Report>> GetByAccountId(string accountId)
@@ -27,15 +30,36 @@ public class ReportRepository : IReportRepository
             .ToListAsync();
     }
     
+    public async Task<IActionResult> GetFileByReportId(Guid reportId)
+    {
+        var fileDto = await (from rf in _context.ReportFiles
+            join r in _context.Reports on rf.ReportId equals r.Id
+            where rf.ReportId == reportId
+            select new FileDto
+            {
+                Name = r.FileName,
+                Data = rf.FileData
+            }).FirstOrDefaultAsync();
+
+        // if (fileDto == null)
+        // {
+        //     return Results.NotFound();
+        // }
+
+        return new FileContentResult(fileDto.Data, "application/octet-stream")
+        {
+            FileDownloadName = fileDto.Name
+        };    
+    }
     public async Task<int> CreateReport(TransactionDto[] reportDto)
     {
         Guid reportId = Guid.NewGuid();
-        var newReport = new Entities.Report
+        var newReport = new Report
         {
             Id = reportId,
             AccountId = reportDto.First().AccountId,
             GeneratedAt = DateTime.UtcNow,
-            FileName = $"{reportId}.csv"
+            FileName = $"report_{reportId}"
         };
 
         var csvContent = new StringBuilder();
@@ -48,26 +72,18 @@ public class ReportRepository : IReportRepository
             counter++;
         }
 
-        // Specify the new directory path
-        var directoryPath = Path.Combine("C:", "Reports");
-        if (!Directory.Exists(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        var filePath = Path.Combine(directoryPath, newReport.FileName);
-        await File.WriteAllTextAsync(filePath, csvContent.ToString());
+        var csvBytes = Encoding.UTF8.GetBytes(csvContent.ToString());
 
         _reportsContext.Reports.Add(newReport);
         await _reportsContext.SaveChangesAsync();
-        
+
         var reportFile = new ReportFile
         {
             Id = Guid.NewGuid(),
             ReportId = reportId,
-            FileData = await File.ReadAllBytesAsync(filePath)
+            FileData = csvBytes
         };
-        
+
         _reportFilesContext.ReportFiles.Add(reportFile);
         return await _reportFilesContext.SaveChangesAsync();
     }

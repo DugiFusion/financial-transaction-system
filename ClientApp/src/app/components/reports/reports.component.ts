@@ -50,7 +50,27 @@ export class ReportsComponent implements OnInit {
   }
 
   downloadReport(reportId: string): void {
-    // Implement download logic here
+    this.reportingService.getFile(reportId).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        const byteCharacters = atob(data.fileContents); // Decode base64 string
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'text/csv' }); // Set MIME type to 'text/csv'
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = data.fileDownloadName; // Use the file name from the response
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => console.error('Error:', err),
+    });
   }
 
   deleteReport(reportId: string): void {

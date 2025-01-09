@@ -88,6 +88,21 @@
         "TtlSeconds": 1
       }
     },
+    {
+      "UpstreamPathTemplate": "/gateway/reporting/getFile/{reportId}",
+      "UpstreamHttpMethod": ["GET"],
+      "DownstreamPathTemplate": "/api/v1/Reporting/getFile/{reportId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5002"
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 1
+      }
+    },
 
     {
       "UpstreamPathTemplate": "/gateway/reporting/{id}",

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
+using Reporting.API;
 using Reporting.API.EventBusConsumer;
 using Reporting.API.Repositories;
 using Reporting.API.Repositories.Interfaces;
@@ -41,7 +42,10 @@ builder.Services.AddDbContext<ReportFilesContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
-
+builder.Services.AddDbContext<CombinedContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
 
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 

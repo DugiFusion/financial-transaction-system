@@ -30,4 +30,5 @@ export class TransactionsService {
     return this.http.post(`${this.apiUrl}/transaction/send-message`, request, { headers, responseType: 'text' });
   }
 
+  
 }
