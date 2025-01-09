@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Transaction.Data;
 using Transaction.Data.DTOs;
 using Transactions.Entities.Enumerations;
+using Transactions.EventBusProducer;
 using Transactions.Repositories.Interfaces;
 
 namespace Transactions.Repositories;
@@ -9,11 +10,20 @@ namespace Transactions.Repositories;
 public class TransactionRepository : ITransactionRepository
 {
     private readonly TransactionContext _transactionContext;
+    private readonly Producer _rabbitMqProducer;
 
-    public TransactionRepository(TransactionContext transactionContext)
+    public TransactionRepository(TransactionContext transactionContext, Producer rabbitMqProducer)
     {
         _transactionContext = transactionContext;
+        _rabbitMqProducer = rabbitMqProducer;
     }
+    public async Task<IEnumerable<Entities.Transaction>> CreateReport(string accountId)
+    {
+        var transactions = await _transactionContext.Transactions.ToListAsync();
+        _rabbitMqProducer.SendMessage(transactions, "transactionQueue");
+        return transactions;
+    }
+    
     public async Task<IEnumerable<Entities.Transaction>> GetByAccountId(string accountId)
     {
         return await _transactionContext

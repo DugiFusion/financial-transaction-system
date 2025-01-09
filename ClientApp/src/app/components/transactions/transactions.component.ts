@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReportingService } from '../../services/reporting/reporting.service';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
   transactionToInsert: Transaction = {} as Transaction;
   dataSource = new MatTableDataSource<Transaction>([]);
   transactionTypes = Object.keys(TransactionType).filter(key => isNaN(Number(key)));
-
+  allTransactions: Transaction[] = [];
 
 
 
@@ -43,6 +44,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   constructor(private readonly transactionsService: TransactionsService,
      private snackBar: MatSnackBar,
+     private readonly reportingService: ReportingService
     ) { }
 
   ngOnInit(): void {
@@ -55,6 +57,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
         });
 
         this.dataSource.data = data;
+        this.allTransactions = data;
       },
       error: (err) => console.error('Error:', err),
     });
@@ -132,6 +135,18 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
         this.dataSource.data = data;
       },
       error: (err) => console.error('Error refreshing table:', err),
+    });
+  }
+
+  generateReport(): void{
+    this.transactionsService.generateReport(this.allTransactions).subscribe({
+      next: (data) => {
+        console.log('Report generated successfully:', data);
+        this.snackBar.open('Report generated successfully', 'Close', {
+          duration: 3000, // Duration in milliseconds
+        });
+      },
+      error: (err) => console.error('Error generating report:', err),
     });
   }
 
