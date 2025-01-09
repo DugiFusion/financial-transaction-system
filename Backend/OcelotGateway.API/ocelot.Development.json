@@ -74,19 +74,20 @@
     // Reporting
 
     {
-      "UpstreamPathTemplate": "/gateway/reporting",
-      "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/v1/Reporting",
+      "UpstreamPathTemplate": "/gateway/reporting/{accountId}",
+      "UpstreamHttpMethod": ["GET"],
+      "DownstreamPathTemplate": "/api/v1/Reporting/{accountId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5002
+          "Port": "5002"
         }
       ],
       "FileCacheOptions": {
         "TtlSeconds": 20
       }
     }
+    
   ]
 }

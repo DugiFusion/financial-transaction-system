@@ -1,5 +1,5 @@
 <!-- Main Content -->
-<div class="container content d-flex justify-content-center" style="height: 100vh; width: 100%;">
+<div class="container content d-flex justify-content-center" >
   <div class="row">
     <div class="col-md-3">
       <!-- Transaction Form -->
@@ -109,7 +109,7 @@
           </ng-container>
           <ng-container matColumnDef="createdDate">
             <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let transaction">{{ transaction.createdDate | date: 'yyyy-MM-dd' }}</td>
+            <td mat-cell *matCellDef="let transaction">{{ transaction.createdDate | date: 'dd/MM/yyyy'  }}</td>
           </ng-container>
           <ng-container matColumnDef="note">
             <th mat-header-cell *matHeaderCellDef>Note</th>

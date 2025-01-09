@@ -20,34 +20,10 @@ public class ReportRepository : IReportRepository
     public async Task<IEnumerable<Report>> GetByAccountId(string accountId)
     {
         return await _reportsContext.Reports
-            //.Where(x => x.AccountId == accountId)
+            .Where(x => x.AccountId == accountId)
             .ToListAsync();
     }
-
-    // public async Task<int> CreateReport(TransactionDto[] reportDto)
-    // {
-    //     var newReport = new Entities.Report
-    //     {
-    //         AccountId = reportDto.First().AccountId,
-    //         GeneratedAt = DateTime.UtcNow,
-    //         FileName = $"{Guid.NewGuid()}.csv"
-    //     };
-    //
-    //     var csvContent = new StringBuilder();
-    //     csvContent.AppendLine("Id,AccountId,CustomerId,Amount,Type,Note,CreatedDate");
-    //
-    //     foreach (var transaction in reportDto)
-    //     {
-    //         csvContent.AppendLine($"{transaction.Id},{transaction.AccountId},{transaction.CustomerId},{transaction.Amount},{transaction.Type},{transaction.Note},{transaction.CreatedDate}");
-    //     }
-    //
-    //     var filePath = Path.Combine("Reports", newReport.FileName);
-    //     await File.WriteAllTextAsync(filePath, csvContent.ToString());
-    //
-    //     _reportsContext.Reports.Add(newReport);
-    //     return await _reportsContext.SaveChangesAsync();
-    // }
-
+    
     public async Task<int> CreateReport(TransactionDto[] reportDto)
     {
         Guid reportId = Guid.NewGuid();

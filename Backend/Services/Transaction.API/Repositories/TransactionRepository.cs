@@ -28,9 +28,8 @@ public class TransactionRepository : ITransactionRepository
     {
         return await _transactionContext
             .Transactions
-            //.Where(x => x.AccountId == accountId)
+            .Where(x => x.AccountId == accountId)
             .ToListAsync();
-        //return new List<TransactionDto>();
     }
 
     public async Task<int> CreateTransaction(TransactionDto transactionDto)

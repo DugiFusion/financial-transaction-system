@@ -44,7 +44,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   constructor(private readonly transactionsService: TransactionsService,
      private snackBar: MatSnackBar,
-     private readonly reportingService: ReportingService
     ) { }
 
   ngOnInit(): void {
@@ -92,11 +91,23 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  insertTransaction(): void {
-    this.transactionToInsert.note = this.transactionToInsert.note.trim();
-    this.transactionToInsert.accountId = this.transactionToInsert.accountId.trim();
-    this.transactionToInsert.customerId = this.transactionToInsert.customerId.trim();
+  formatTransaction(transaction: Transaction): void {
+    var note = this.transactionToInsert.note.trim();
+    var accountId = this.transactionToInsert.accountId.trim();
+    var customerId = this.transactionToInsert.customerId.trim();
 
+
+    this.transactionToInsert.note = note;
+    this.transactionToInsert.accountId = accountId;
+    this.transactionToInsert.customerId = customerId;
+
+  }
+
+  insertTransaction(): void {
+    
+    this.formatTransaction(this.transactionToInsert);
+
+    
     const cleanCustomerId = this.transactionToInsert.customerId.replace(/-/g, '');
     const cleanAccountId = this.transactionToInsert.accountId.replace(/-/g, '');
 

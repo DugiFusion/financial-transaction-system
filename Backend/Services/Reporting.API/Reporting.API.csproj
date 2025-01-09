@@ -35,8 +35,4 @@
       <ProjectReference Include="..\Transaction.API\Transaction.API.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers\" />
-    </ItemGroup>
-
 </Project>
