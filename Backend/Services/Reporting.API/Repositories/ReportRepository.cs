@@ -11,10 +11,13 @@ namespace Reporting.API.Repositories;
 public class ReportRepository : IReportRepository
 {
     private readonly ReportsContext _reportsContext;
+    private readonly ReportFilesContext _reportFilesContext;
 
-    public ReportRepository(ReportsContext reportsContext)
+
+    public ReportRepository(ReportsContext reportsContext, ReportFilesContext reportFilesContext)
     {
         _reportsContext = reportsContext;
+        _reportFilesContext = reportFilesContext;
     }
      
     public async Task<IEnumerable<Report>> GetByAccountId(string accountId)
@@ -56,7 +59,17 @@ public class ReportRepository : IReportRepository
         await File.WriteAllTextAsync(filePath, csvContent.ToString());
 
         _reportsContext.Reports.Add(newReport);
-        return await _reportsContext.SaveChangesAsync();
+        await _reportsContext.SaveChangesAsync();
+        
+        var reportFile = new ReportFile
+        {
+            Id = Guid.NewGuid(),
+            ReportId = reportId,
+            FileData = await File.ReadAllBytesAsync(filePath)
+        };
+        
+        _reportFilesContext.ReportFiles.Add(reportFile);
+        return await _reportFilesContext.SaveChangesAsync();
     }
     
     

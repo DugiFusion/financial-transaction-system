@@ -37,6 +37,11 @@ builder.Services.AddDbContext<ReportsContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+builder.Services.AddDbContext<ReportFilesContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+
 
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 
