@@ -30,4 +30,25 @@ public class ReportingController: ControllerBase
         var result = await _reportRepository.GetByAccountId(accountId);
         return Ok(result);
     }
+    
+    
+     
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteTransaction(Guid id)
+    {
+        if (id == Guid.Empty)
+        {
+            _logger.LogError("Invalid transaction ID");
+            return BadRequest("Invalid transaction ID");
+        }
+
+        var result = await _reportRepository.DeleteReport(id);
+        if (result == 1)
+        {
+            return NoContent();
+        }
+            
+        return NotFound();
+            
+    }
 }

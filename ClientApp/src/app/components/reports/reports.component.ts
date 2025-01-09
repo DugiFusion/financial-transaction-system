@@ -7,7 +7,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule, DatePipe, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reports',
@@ -25,15 +25,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit {
-  displayedColumns: string[] = ['generatedAt', 'fileName', 'download'];
+  displayedColumns: string[] = ['generatedAt', 'fileName', 'actions'];
   dataSource = new MatTableDataSource<Report>([]);
-
-
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-
-  constructor(    private readonly reportingService: ReportingService
+  constructor(private readonly reportingService: ReportingService,
+         private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -51,15 +49,34 @@ export class ReportsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  downloadReport(reportId: number): void {
+  downloadReport(reportId: string): void {
     // Implement download logic here
   }
-}
 
-// const REPORT_DATA: Report[] = [
-//   { id: "1", generatedAt: new Date(), name: 'Report 1', accountId: '1234' },
-//   { id: "2", generatedAt: new Date(), name: 'Report 2', accountId: '1234' },
-//   // Add more report data here
-// ];
+  deleteReport(reportId: string): void {
+    this.reportingService.delete(reportId).subscribe({
+      next: () => {
+        this.dataSource.data = this.dataSource.data.filter((report) => report.id !== reportId);
+        console.log('Transaction deleted successfully');
+        this.snackBar.open('Transaction deleted successfully', 'Close', {
+          duration: 3000, // Duration in milliseconds
+        });
+      this.refreshTable();
+      },
+      error: (err) => console.error('Error:', err),
+    });
+  }
+
+  refreshTable(): void {
+    const userId = '1234123412341234';
+    this.reportingService.get(userId).subscribe({
+      next: (data) => {
+        data.sort((a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime());
+        this.dataSource.data = data;
+      },
+      error: (err) => console.error('Error:', err),
+    });
+  }
+}
 
 

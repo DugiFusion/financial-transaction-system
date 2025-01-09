@@ -10,11 +10,14 @@
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let report">{{ report.fileName }}</td>
         </ng-container>
-        <ng-container matColumnDef="download">
-          <th mat-header-cell *matHeaderCellDef>Download</th>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let report">
-            <button mat-icon-button color="primary" (click)="downloadReport(report.id)">
-              <mat-icon>download</mat-icon>
+            <button mat-icon-button color="primary" class="download-button" (click)="downloadReport(report.id)">
+              <mat-icon class="download-icon">download</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" class="delete-button" (click)="deleteReport(report.id)">
+              <mat-icon class="delete-icon">delete</mat-icon>
             </button>
           </td>
         </ng-container>

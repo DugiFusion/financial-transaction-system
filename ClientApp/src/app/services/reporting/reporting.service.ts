@@ -15,4 +15,8 @@ export class ReportingService {
   get(userId: string): Observable<Report[]> {
     return this.http.get<Report[]>(`${this.apiUrl}/reporting/${userId}`);
   }
+
+  delete(id: string): Observable<number> {
+    return this.http.delete<number>(`${this.apiUrl}/reporting/${id}`);
+  }
 }

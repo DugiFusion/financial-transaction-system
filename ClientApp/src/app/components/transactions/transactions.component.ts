@@ -84,11 +84,13 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
         this.snackBar.open('Transaction deleted successfully', 'Close', {
           duration: 3000, // Duration in milliseconds
         });
-      this.refreshTable();
+        this.refreshTable();
 
       },
       error: (err) => console.error('Error deleting transaction:', err),
     });
+
+
   }
 
   formatTransaction(transaction: Transaction): void {
@@ -134,11 +136,11 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
       },
       error: (err) => console.error('Error inserting transaction:', err),
     });
+
   }
 
-  // Refresh table after insertion
   private refreshTable(): void {
-    this.transactionsService.get('12cd25aa-4022-4a0c-a173-e597b390dcc3').subscribe({
+    this.transactionsService.get('1234123412341234').subscribe({
       next: (data) => {
         data.forEach(transaction => {
           transaction.customerId = this.formatPAN(transaction.customerId);
@@ -149,15 +151,16 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  generateReport(): void{
+  generateReport(): void {
     this.transactionsService.generateReport(this.allTransactions).subscribe({
       next: (data) => {
         console.log('Report generated successfully:', data);
-        this.snackBar.open('Report generated successfully', 'Close', {
-          duration: 3000, // Duration in milliseconds
-        });
       },
       error: (err) => console.error('Error generating report:', err),
+    });
+  
+    this.snackBar.open('Report started generating', 'Close', {
+      duration: 3000, // Duration in milliseconds
     });
   }
 

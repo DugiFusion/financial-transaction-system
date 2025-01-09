@@ -1,8 +1,9 @@
 .delete-button {
     padding: 0;
+    border: none;
   }
   
 .delete-icon {
-font-size: 16px; /* Make the icon smaller */
+font-size: 24px; /* Make the icon smaller */
 color: red; /* Make the icon red */
 }

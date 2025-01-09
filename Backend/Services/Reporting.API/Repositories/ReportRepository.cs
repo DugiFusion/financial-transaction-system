@@ -83,7 +83,17 @@ public class ReportRepository : IReportRepository
             return 0;
         }
 
-        _reportsContext.Reports.Remove(report);
-        return await _reportsContext.SaveChangesAsync();
+        _reportsContext.Reports.Remove(report); 
+        await _reportsContext.SaveChangesAsync();
+        
+        var reportFile = await _reportFilesContext.ReportFiles
+            .FirstOrDefaultAsync(x => x.ReportId == id);
+        if (reportFile == null)
+        {
+            return 0;
+        }
+
+        _reportFilesContext.ReportFiles.Remove(reportFile);
+        return await _reportFilesContext.SaveChangesAsync();
     }
 }
