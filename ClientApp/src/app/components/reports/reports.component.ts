@@ -53,6 +53,13 @@ export class ReportsComponent implements OnInit {
     this.reportingService.getFile(reportId).subscribe({
       next: (data: any) => {
         console.log(data);
+  
+        // Check if the base64 string is valid
+        if (!data.fileContents || !this.isBase64(data.fileContents)) {
+          console.error('Invalid base64 string');
+          return;
+        }
+  
         const byteCharacters = atob(data.fileContents); // Decode base64 string
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -72,13 +79,21 @@ export class ReportsComponent implements OnInit {
       error: (err) => console.error('Error:', err),
     });
   }
+  
+  // Helper function to check if a string is valid base64
+  isBase64(str: string): boolean {
+    try {
+      return btoa(atob(str)) === str;
+    } catch (err) {
+      return false;
+    }
+  }
 
   deleteReport(reportId: string): void {
     this.reportingService.delete(reportId).subscribe({
       next: () => {
         this.dataSource.data = this.dataSource.data.filter((report) => report.id !== reportId);
-        console.log('Transaction deleted successfully');
-        this.snackBar.open('Transaction deleted successfully', 'Close', {
+        this.snackBar.open('Reportr deleted successfully', 'Close', {
           duration: 3000, // Duration in milliseconds
         });
       this.refreshTable();

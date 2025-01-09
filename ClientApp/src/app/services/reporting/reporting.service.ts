@@ -19,7 +19,7 @@ export class ReportingService {
   delete(id: string): Observable<number> {
     return this.http.delete<number>(`${this.apiUrl}/reporting/${id}`);
   }
-  getFile(reportId: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/reporting/${reportId}`, { responseType: 'blob' });
+  getFile(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/reporting/getFile/${id}`, ); // { responseType: 'blob' }
   }
 }
