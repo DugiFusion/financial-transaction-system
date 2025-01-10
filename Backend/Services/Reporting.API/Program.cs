@@ -1,44 +1,98 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
+using Reporting.API;
+using Reporting.API.EventBusConsumer;
+using Reporting.API.Repositories;
+using Reporting.API.Repositories.Interfaces;
+using Transaction.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+Console.WriteLine($"**********************************************************\n" +
+                  $"**********************************************************\n\n" +
+                  $"STARTING REPORTING SERVICE IN {builder.Environment.EnvironmentName} MODE\n\n" +
+                  $"**********************************************************\n" +
+                  $"**********************************************************\n");
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+builder.Services.AddOpenApi();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        config => config
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
+var connectionString = builder.Configuration.GetConnectionString("ReportingDatabase");
+builder.Services.AddDbContext<ReportsContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+builder.Services.AddDbContext<ReportFilesContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+builder.Services.AddDbContext<CombinedContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+
+// RABBITMQ
+builder.Services.AddSingleton<IConnectionFactory>(sp => new ConnectionFactory
+{
+    HostName = "localhost",
+    UserName = "guest",
+    Password = "guest",
+    Port = 5672
+});
+
+builder.Services.AddTransient<Consumer>();
+builder.Services.AddScoped<MessageHandler>();
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(s =>
+{
+    s.SwaggerDoc("v1", new OpenApiInfo { Title = "Reporting.API", Version = "v1" });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.MapOpenApi();
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Reporting.API v1"));
 }
+
+app.UseCors("AllowSpecificOrigin");
+
+app.MapControllers();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// RabbitMQ Consumer
+// RabbitMQ Consumer
+var scope = app.Services.CreateScope();
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+var scopedServices = scope.ServiceProvider;
+var rabbitMqConsumer = scopedServices.GetRequiredService<Consumer>();
+var messageHandler = scopedServices.GetRequiredService<MessageHandler>();
+
+rabbitMqConsumer.StartConsuming("transactionQueue", messageHandler.HandleMessage);
+
+
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

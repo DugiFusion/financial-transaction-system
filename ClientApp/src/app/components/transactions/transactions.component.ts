@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReportingService } from '../../services/reporting/reporting.service';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
   transactionToInsert: Transaction = {} as Transaction;
   dataSource = new MatTableDataSource<Transaction>([]);
   transactionTypes = Object.keys(TransactionType).filter(key => isNaN(Number(key)));
-
+  allTransactions: Transaction[] = [];
 
 
 
@@ -55,6 +56,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
         });
 
         this.dataSource.data = data;
+        this.allTransactions = data;
       },
       error: (err) => console.error('Error:', err),
     });
@@ -82,18 +84,32 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
         this.snackBar.open('Transaction deleted successfully', 'Close', {
           duration: 3000, // Duration in milliseconds
         });
-      this.refreshTable();
+        this.refreshTable();
 
       },
       error: (err) => console.error('Error deleting transaction:', err),
     });
+
+
+  }
+
+  formatTransaction(transaction: Transaction): void {
+    var note = this.transactionToInsert.note.trim();
+    var accountId = this.transactionToInsert.accountId.trim();
+    var customerId = this.transactionToInsert.customerId.trim();
+
+
+    this.transactionToInsert.note = note;
+    this.transactionToInsert.accountId = accountId;
+    this.transactionToInsert.customerId = customerId;
+
   }
 
   insertTransaction(): void {
-    this.transactionToInsert.note = this.transactionToInsert.note.trim();
-    this.transactionToInsert.accountId = this.transactionToInsert.accountId.trim();
-    this.transactionToInsert.customerId = this.transactionToInsert.customerId.trim();
+    
+    this.formatTransaction(this.transactionToInsert);
 
+    
     const cleanCustomerId = this.transactionToInsert.customerId.replace(/-/g, '');
     const cleanAccountId = this.transactionToInsert.accountId.replace(/-/g, '');
 
@@ -120,11 +136,11 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
       },
       error: (err) => console.error('Error inserting transaction:', err),
     });
+
   }
 
-  // Refresh table after insertion
   private refreshTable(): void {
-    this.transactionsService.get('12cd25aa-4022-4a0c-a173-e597b390dcc3').subscribe({
+    this.transactionsService.get('1234123412341234').subscribe({
       next: (data) => {
         data.forEach(transaction => {
           transaction.customerId = this.formatPAN(transaction.customerId);
@@ -132,6 +148,19 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
         this.dataSource.data = data;
       },
       error: (err) => console.error('Error refreshing table:', err),
+    });
+  }
+
+  generateReport(): void {
+    this.transactionsService.generateReport(this.allTransactions).subscribe({
+      next: (data) => {
+        console.log('Report generated successfully:', data);
+      },
+      error: (err) => console.error('Error generating report:', err),
+    });
+  
+    this.snackBar.open('Report started generating', 'Close', {
+      duration: 3000, // Duration in milliseconds
     });
   }
 

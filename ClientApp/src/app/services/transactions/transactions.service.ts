@@ -23,4 +23,12 @@ export class TransactionsService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<Transaction>(`${this.apiUrl}/transaction`, transaction, { headers });
   }
+
+  generateReport(transactions: Transaction[]): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const request = { Transactions: transactions };
+    return this.http.post(`${this.apiUrl}/transaction/send-message`, request, { headers, responseType: 'text' });
+  }
+
+  
 }

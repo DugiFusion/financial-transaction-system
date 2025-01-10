@@ -5,7 +5,9 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using Transaction.Data;
+using Transactions.EventBusProducer;
 using Transactions.Repositories;
 using Transactions.Repositories.Interfaces;
 
@@ -53,6 +55,17 @@ builder.Services.AddDbContext<TransactionContext>(options =>
 
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<TransactionContext>();
+
+
+// RABBITMQ
+builder.Services.AddScoped<Producer>();
+builder.Services.AddSingleton<IConnectionFactory>(sp => new ConnectionFactory
+{
+    HostName = "localhost",
+    UserName = "guest",
+    Password = "guest",
+    Port = 5672
+});
 
 
 builder.Services.AddControllers();

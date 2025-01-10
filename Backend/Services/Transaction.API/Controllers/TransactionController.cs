@@ -2,6 +2,8 @@ using System.Drawing.Printing;
 using Microsoft.AspNetCore.Mvc;
 using Transaction.Data.DTOs;
 using Transactions.Entities.Enumerations;
+using Transactions.Entities.Requests;
+using Transactions.EventBusProducer;
 using Transactions.Repositories;
 using Transactions.Repositories.Interfaces;
 
@@ -14,11 +16,13 @@ namespace Transactions.Controllers;
         
         private readonly ITransactionRepository _transactionRepository;
         private readonly ILogger<TransactionController> _logger;
+        private readonly Producer _producer;
 
-        public TransactionController(ITransactionRepository transactionRepository, ILogger<TransactionController> logger)
+        public TransactionController(ITransactionRepository transactionRepository, ILogger<TransactionController> logger, Producer producer)
         {
             _transactionRepository = transactionRepository;
             _logger = logger;
+            _producer = producer;
         }
 
 
@@ -76,9 +80,21 @@ namespace Transactions.Controllers;
             {
                 return NoContent();
             }
-            else
+            
+            return NotFound();
+            
+        }
+        
+        [HttpPost("send-message")]
+        public async Task<IActionResult> SendMessage([FromBody] TransactionRequest request)
+        {
+            if (request?.Transactions == null || request.Transactions.Count == 0)
             {
-                return NotFound();
+                return BadRequest("Transaction data is null or empty");
             }
+
+            await _producer.SendMessage(request.Transactions, "transactionQueue");
+            
+            return Ok("Messages sent successfully");
         }
     }

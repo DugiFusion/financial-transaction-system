@@ -1,0 +1,19 @@
+.delete-button {
+    padding: 0;
+    border: none;
+  }
+  
+.delete-icon {
+font-size: 24px; /* Make the icon smaller */
+color: red; /* Make the icon red */
+}
+
+.download-button {
+    padding: 0;
+    border: none;
+  }
+  
+.download-icon {
+font-size: 24px; /* Make the icon smaller */
+color: black; /* Make the icon red */
+}
