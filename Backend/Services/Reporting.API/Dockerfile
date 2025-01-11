@@ -8,9 +8,8 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy the csproj files and restore dependencies
+# Copy the csproj and restore dependencies
 COPY ["Reporting.API.csproj", "."]
-COPY ["../Transaction.API/Transaction.API.csproj", "../Transaction.API/"]
 RUN dotnet restore "Reporting.API.csproj"
 
 # Copy the rest of the application and build it

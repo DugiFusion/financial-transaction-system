@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: transaction-service
+  name: reporting-service
   labels:
-    app: transaction-service
+    app: reporting-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: transaction-service
+      app: reporting-service
   template:
     metadata:
       labels:
-        app: transaction-service
+        app: reporting-service
     spec:
       tolerations:
         - key: "CriticalAddonsOnly"
           operator: "Exists"
           effect: "NoSchedule"
       containers:
-        - name: transaction-api
-          image: dugi888/transaction-service:latest  # Your Docker image repository
+        - name: reporting-api
+          image: dugi888/reporting-service:latest  # Your Docker image repository
           ports:
-            - containerPort: 8086  # Port where the service will run
+            - containerPort: 8087  # Port where the service will run
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Production"  # Set the environment to production
             - name: ASPNETCORE_URLS
-              value: "http://+:8086"  # Expose the service on port 8086
+              value: "http://+:8087"  # Expose the service on port 8086
           volumeMounts:
             - name: app-settings
               mountPath: appsettings.Production.json
@@ -35,18 +35,18 @@ spec:
       volumes:
         - name: app-settings
           configMap:
-            name: transaction-service-config  # The ConfigMap holding the config files
+            name: reporting-service-config  # The ConfigMap holding the config files
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: transaction-service
+  name: reporting-service
 spec:
   selector:
-    app: transaction-service
+    app: reporting-service
   ports:
     - protocol: TCP
-      port: 8086
-      targetPort: 8086  # Port the container is listening on
+      port: 8087
+      targetPort: 8087  # Port the container is listening on
   type: ClusterIP  # Exposes the service inside the cluster

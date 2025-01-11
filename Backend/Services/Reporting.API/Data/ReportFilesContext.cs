@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Reporting.API.Entities;
 
-namespace Transaction.Data;
+namespace Reporting.API.Data;
 
 public class ReportFilesContext:DbContext
 {
-    public DbSet<Reporting.API.Entities.ReportFile> ReportFiles { get; set; }
+    public DbSet<ReportFile> ReportFiles { get; set; }
     public ReportFilesContext(DbContextOptions<ReportFilesContext> options) : base(options)
     {
             

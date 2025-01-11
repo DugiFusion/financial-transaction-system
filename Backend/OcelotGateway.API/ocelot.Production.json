@@ -1,6 +1,15 @@
-{
+{ 
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information",
+      "Microsoft.Hosting.Lifetime": "Information",
+      "Ocelot": "Debug"
+    }
+  },
   "GlobalConfiguration": {
-    "BaseUrl": "http://72.146.60.137:8085"
+    "BaseUrl": "http://72.146.63.114:8085"
   },
   "Routes": [
     {
@@ -65,7 +74,7 @@
     },
     {
       "UpstreamPathTemplate": "/gateway/reporting/{accountId}",
-      "UpstreamHttpMethod": ["GET"],
+      "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/Reporting/{accountId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -80,7 +89,7 @@
     },
     {
       "UpstreamPathTemplate": "/gateway/reporting/getFile/{reportId}",
-      "UpstreamHttpMethod": ["GET"],
+      "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/v1/Reporting/getFile/{reportId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

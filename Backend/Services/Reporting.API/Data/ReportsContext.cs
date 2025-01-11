@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Reporting.API.Entities;
 
-namespace Transaction.Data;
+namespace Reporting.API.Data;
 public class ReportsContext : DbContext
 {
     public DbSet<Reporting.API.Entities.Report> Reports { get; set; }
