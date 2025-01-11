@@ -30,6 +30,7 @@ spec:
       serviceAccountName: {{ include "helm-chart-transaction.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

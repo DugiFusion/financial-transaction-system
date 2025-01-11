@@ -122,4 +122,25 @@ namespace Transactions.Controllers;
 
             return Ok("Messages sent successfully");
         }
+        
+        /// <summary>
+        /// Health check for the service.
+        /// </summary>
+        /// <returns>Healthy message if healthy</returns>
+        [HttpGet("health")]
+        public IActionResult HealthCheck()
+        {
+            return Ok("Healthy");
+        }
+
+        /// <summary>
+        /// Readiness check for the service.
+        /// </summary>
+        /// <returns>Ready message if allive</returns>
+
+        [HttpGet("readiness")]
+        public IActionResult ReadinessCheck()
+        {
+            return Ok("Ready");
+        }
     }
