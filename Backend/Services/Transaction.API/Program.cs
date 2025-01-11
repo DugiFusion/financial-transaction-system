@@ -57,14 +57,23 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<TransactionContext>();
 
 
+// Producer
+builder.Services.AddSingleton<Transactions.EventBusProducer.Producer>();
+
+
 // RABBITMQ
-builder.Services.AddScoped<Producer>();
-builder.Services.AddSingleton<IConnectionFactory>(sp => new ConnectionFactory
+builder.Services.AddSingleton<IConnectionFactory>(sp =>
 {
-    HostName = "localhost",
-    UserName = "guest",
-    Password = "guest",
-    Port = 5672
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var rabbitMqConfig = configuration.GetSection("RabbitMQ");
+    
+    return new ConnectionFactory
+    {
+        HostName = rabbitMqConfig["HostName"],
+        UserName = rabbitMqConfig["UserName"],
+        Password = rabbitMqConfig["Password"],
+        Port = int.Parse(rabbitMqConfig["Port"])
+    };
 });
 
 

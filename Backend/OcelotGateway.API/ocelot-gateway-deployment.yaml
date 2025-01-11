@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocelot-gateway
+  labels:
+    app: ocelot-gateway
+spec:
+  replicas: 3  # You can scale it as needed
+  selector:
+    matchLabels:
+      app: ocelot-gateway
+  template:
+    metadata:
+      labels:
+        app: ocelot-gateway
+    spec:
+      tolerations:
+        - key: "CriticalAddonsOnly"
+          operator: "Exists"
+          effect: "NoSchedule"
+      containers:
+        - name: ocelot-gateway
+          image: dugi888/ocelot-gateway:latest  # Replace with your Ocelot Docker image
+          ports:
+            - containerPort: 8085  # Changed port to 8085
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"  # Set your environment (e.g., Development, Production)
+          volumeMounts:
+            - name: config-volume
+              mountPath: ocelot.Production.json  # Path to mount configuration files if needed
+              subPath: ocelot.Production.json  # Assuming you're using a file for your Ocelot configuration
+      volumes:
+        - name: config-volume
+          configMap:
+            name: ocelot-config  # The name of your ConfigMap containing the Ocelot configuration
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ocelot-gateway-service
+spec:
+  selector:
+    app: ocelot-gateway
+  ports:
+    - protocol: TCP
+      port: 8085  # Exposed port
+      targetPort: 8085  # Container port
+  type: LoadBalancer  # Change to ClusterIP if you want internal access only

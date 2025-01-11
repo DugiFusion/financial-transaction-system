@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
-        <RootNamespace>Transactions</RootNamespace>
+        <RootNamespace>Transaction</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

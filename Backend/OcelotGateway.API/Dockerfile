@@ -1,8 +1,7 @@
 ﻿# Use the official ASP.NET runtime image as the base for the final image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8085
 
 # Use the official .NET SDK image to build and publish the app
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
@@ -28,6 +27,12 @@ WORKDIR /app
 
 # Copy the published app from the build stage
 COPY --from=publish /app/publish .
+
+# Set the ASP.NET Core environment to Production
+ENV ASPNETCORE_ENVIRONMENT=Production
+
+# Change the default port to 8085
+ENV ASPNETCORE_URLS=http://+:8085
 
 # Set the entry point for the container
 ENTRYPOINT ["dotnet", "OcelotGateway.API.dll"]

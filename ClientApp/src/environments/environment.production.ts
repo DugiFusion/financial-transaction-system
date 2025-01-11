@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:5000/gateway', //'https://your-production-api-url/gateway',
+  apiUrl: 'http://72.146.60.137:8085/gateway', 
   env: 'Production'
 };

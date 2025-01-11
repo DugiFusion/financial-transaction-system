@@ -13,7 +13,6 @@ spec:
     metadata:
       labels:
         app: rabbitmq
-      
     spec:
       tolerations:
         - key: "CriticalAddonsOnly"
@@ -30,14 +29,14 @@ spec:
               value: admin   # Set your RabbitMQ username
             - name: RABBITMQ_DEFAULT_PASS
               value: admin   # Set your RabbitMQ password
-      
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: rabbitmq
 spec:
-  type: LoadBalancer   # For external access
+  type: ClusterIP   # For internal access only
   ports:
     - name: amqp
       port: 5672         # AMQP port for messaging

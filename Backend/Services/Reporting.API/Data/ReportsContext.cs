@@ -11,6 +11,10 @@ public class ReportsContext : DbContext
             
             
     }
-        
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Report>()
+            .ToTable("Reports", "dbo");
+    }
 
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Reporting.API.Entities;
 
 namespace Transaction.Data;
 
@@ -9,5 +10,10 @@ public class ReportFilesContext:DbContext
     {
             
             
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ReportFile>()
+            .ToTable("ReportFiles", "dbo");
     }
 }

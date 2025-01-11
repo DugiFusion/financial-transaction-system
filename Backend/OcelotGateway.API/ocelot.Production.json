@@ -1,25 +1,112 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
+    "BaseUrl": "http://72.146.60.137:8085"
   },
   "Routes": [
-
     {
       "UpstreamPathTemplate": "/gateway/transaction/{accountId}",
       "UpstreamHttpMethod": [ "GET" ],
-
       "DownstreamPathTemplate": "/api/v1/Transaction/{accountId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "transaction-service",
+          "Port": 8086
         }
       ],
       "FileCacheOptions": {
-        "TtlSeconds": 20
+        "TtlSeconds": 1
       }
-
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/transaction/send-message",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/v1/Transaction/send-message",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "transaction-service",
+          "Port": 8086
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/transaction",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/v1/Transaction",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "transaction-service",
+          "Port": 8086
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/transaction/{transactionId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/api/v1/Transaction/{transactionId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "transaction-service",
+          "Port": 8086
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/reporting/{accountId}",
+      "UpstreamHttpMethod": ["GET"],
+      "DownstreamPathTemplate": "/api/v1/Reporting/{accountId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "reporting-service",
+          "Port": 8087
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/reporting/getFile/{reportId}",
+      "UpstreamHttpMethod": ["GET"],
+      "DownstreamPathTemplate": "/api/v1/Reporting/getFile/{reportId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "reporting-service",
+          "Port": 8087
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/reporting/{id}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamPathTemplate": "/api/v1/Reporting/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "reporting-service",
+          "Port": 8087
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 1
+      }
     }
   ]
 }
