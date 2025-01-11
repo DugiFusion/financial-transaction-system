@@ -26,7 +26,16 @@ namespace Transactions.Controllers;
         }
 
 
-        [HttpGet ("{accountId}")] 
+        /// <summary>
+        /// Gets transactions by account ID.
+        /// </summary>
+        /// <param name="accountId">The account ID to filter transactions.</param>
+        /// <returns>Returns a list of transactions for the given account.</returns>
+        /// <response code="200">Returns list of transactions for account id.</response>
+        /// <response code="400">The request is invalid due to a bad account id.</response>
+        /// <response code="403">The user does not have permission to access the report data.</response>
+        /// <response code="500">An internal server error occurred while retrieving the transactions.</response>
+        [HttpGet("{accountId}")]
         [ProducesResponseType(typeof(List<TransactionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -38,14 +47,21 @@ namespace Transactions.Controllers;
             var result = await _transactionRepository.GetByAccountId(accountId);
             return Ok(result);
         }
-        
-        
+
+        /// <summary>
+        /// Creates a new transaction.
+        /// </summary>
+        /// <param name="transactionDto">The transaction data to create a new transaction.</param>
+        /// <returns>Returns 1 if transaction was created.</returns>
+        /// <response code="200">Returns 1 if transaction was created.</response>
+        /// <response code="400">The request is invalid due to a bad transaction.</response>
+        /// <response code="403">The user does not have permission to access the report data.</response>
+        /// <response code="500">An internal server error occurred while creating transaction.</response>
         [HttpPost]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CreateTransaction([FromBody] TransactionDto transactionDto)
         {
             if (transactionDto == null)
@@ -65,7 +81,12 @@ namespace Transactions.Controllers;
             var result = await _transactionRepository.CreateTransaction(transactionDto);
             return Ok(result);
         }
-        
+
+        /// <summary>
+        /// Deletes an existing transaction by its ID.
+        /// </summary>
+        /// <param name="id">The transaction ID to delete.</param>
+        /// <returns>Returns 204 No Content if deletion is successful, otherwise 404 Not Found.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTransaction(Guid id)
         {
@@ -80,11 +101,15 @@ namespace Transactions.Controllers;
             {
                 return NoContent();
             }
-            
+
             return NotFound();
-            
         }
-        
+
+        /// <summary>
+        /// Sends transaction data as a message to the message queue.
+        /// </summary>
+        /// <param name="request">The transaction request containing the list of transactions to send.</param>
+        /// <returns>Returns a status message indicating whether the messages were sent successfully.</returns>
         [HttpPost("send-message")]
         public async Task<IActionResult> SendMessage([FromBody] TransactionRequest request)
         {
@@ -94,7 +119,7 @@ namespace Transactions.Controllers;
             }
 
             await _producer.SendMessage(request.Transactions, "transactionQueue");
-            
+
             return Ok("Messages sent successfully");
         }
     }

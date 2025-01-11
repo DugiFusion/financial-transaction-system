@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Transaction.API</name>
+    </assembly>
+    <members>
+        <member name="M:Transactions.Controllers.TransactionController.GetByAccountId(System.String)">
+            <summary>
+            Gets transactions by account ID.
+            </summary>
+            <param name="accountId">The account ID to filter transactions.</param>
+            <returns>Returns a list of transactions for the given account.</returns>
+            <response code="200">Returns list of transactions for account id.</response>
+            <response code="400">The request is invalid due to a bad account id.</response>
+            <response code="403">The user does not have permission to access the report data.</response>
+            <response code="500">An internal server error occurred while retrieving the transactions.</response>
+        </member>
+        <member name="M:Transactions.Controllers.TransactionController.CreateTransaction(Transaction.Data.DTOs.TransactionDto)">
+            <summary>
+            Creates a new transaction.
+            </summary>
+            <param name="transactionDto">The transaction data to create a new transaction.</param>
+            <returns>Returns 1 if transaction was created.</returns>
+            <response code="200">Returns 1 if transaction was created.</response>
+            <response code="400">The request is invalid due to a bad transaction.</response>
+            <response code="403">The user does not have permission to access the report data.</response>
+            <response code="500">An internal server error occurred while creating transaction.</response>
+        </member>
+        <member name="M:Transactions.Controllers.TransactionController.DeleteTransaction(System.Guid)">
+            <summary>
+            Deletes an existing transaction by its ID.
+            </summary>
+            <param name="id">The transaction ID to delete.</param>
+            <returns>Returns 204 No Content if deletion is successful, otherwise 404 Not Found.</returns>
+        </member>
+        <member name="M:Transactions.Controllers.TransactionController.SendMessage(Transactions.Entities.Requests.TransactionRequest)">
+            <summary>
+            Sends transaction data as a message to the message queue.
+            </summary>
+            <param name="request">The transaction request containing the list of transactions to send.</param>
+            <returns>Returns a status message indicating whether the messages were sent successfully.</returns>
+        </member>
+    </members>
+</doc>
