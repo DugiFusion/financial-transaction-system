@@ -8,15 +8,24 @@ namespace Transactions.Entities.Enumerations
     {
         public override TransactionType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var value = reader.GetString();
-            return value switch
+            if (reader.TokenType == JsonTokenType.String)
             {
-                "Deposit" => TransactionType.Deposit,
-                "Withdraw" => TransactionType.Withdraw,
-                "0" => TransactionType.Deposit,
-                "1" => TransactionType.Withdraw,
-                _ => throw new JsonException($"Invalid value for TransactionType: {value}")
-            };
+                var stringValue = reader.GetString();
+                if (Enum.TryParse<TransactionType>(stringValue, out var result))
+                {
+                    return result;
+                }
+            }
+            else if (reader.TokenType == JsonTokenType.Number)
+            {
+                var intValue = reader.GetInt32();
+                if (Enum.IsDefined(typeof(TransactionType), intValue))
+                {
+                    return (TransactionType)intValue;
+                }
+            }
+
+            throw new JsonException($"Unable to convert {reader.GetString()} to TransactionType.");
         }
 
         public override void Write(Utf8JsonWriter writer, TransactionType value, JsonSerializerOptions options)

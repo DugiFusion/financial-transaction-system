@@ -11,13 +11,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link active" aria-current="page" routerLink="/" routerLinkActive="active">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/transactions" routerLinkActive="active">Transactions</a> <!-- TODO: IF USER IS REGISTERED -->
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link"routerLink="/reports" routerLinkActive="active">Reports</a>
           </li>
         </ul>
 
@@ -32,8 +32,9 @@
               John Doe
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" routerLink="/" >Profile</a></li>
               <li><a class="dropdown-item" routerLink="/transactions" routerLinkActive="active">Transactions</a></li>
+              <li><a class="dropdown-item" routerLink="/reports" routerLinkActive="active">Reports</a></li>
               <li><a class="dropdown-item" href="#">Log out</a></li>
             </ul>
           </li>

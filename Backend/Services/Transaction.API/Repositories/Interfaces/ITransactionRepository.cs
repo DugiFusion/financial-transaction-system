@@ -9,4 +9,6 @@ public interface ITransactionRepository
     Task<int> CreateTransaction(TransactionDto transactionDto);
     
     Task<int> DeleteTransaction(Guid id);
+    
+    Task<IEnumerable<Entities.Transaction>> CreateReport(string accountId);
 }

@@ -9,9 +9,12 @@ public class TransactionContext : DbContext
         public TransactionContext(DbContextOptions<TransactionContext> options) : base(options)
         {
             
-            
         }
         
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Transactions.Entities.Transaction>()
+                .ToTable("Transactions", "dbo");
+        }
     }
 
