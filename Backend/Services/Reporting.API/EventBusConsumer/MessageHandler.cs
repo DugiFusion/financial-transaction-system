@@ -1,6 +1,7 @@
 using System.Text.Json;
+using Reporting.API.Data.DTOs;
 using Reporting.API.Repositories.Interfaces;
-using Transaction.Data.DTOs;
+
 
 namespace Reporting.API.EventBusConsumer;
 

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Reporting.API.Data.DTOs;
 using Reporting.API.Entities;
-using Transaction.Data.DTOs;
 
 namespace Reporting.API.Repositories.Interfaces;
 

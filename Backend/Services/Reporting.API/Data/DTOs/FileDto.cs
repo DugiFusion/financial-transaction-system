@@ -1,4 +1,4 @@
-namespace Transaction.Data.DTOs;
+namespace Reporting.API.Data.DTOs;
 
 public class FileDto
 {

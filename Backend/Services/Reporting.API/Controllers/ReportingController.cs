@@ -27,6 +27,8 @@ public class ReportingController: ControllerBase
     [ProducesDefaultResponseType]
     public async Task<IActionResult> GetByAccountId(string accountId)
     {
+        _logger.LogInformation( "GetByAccountId requested for account ID: {accountId}", accountId);
+        
         var result = await _reportRepository.GetByAccountId(accountId);
         return Ok(result);
     }
@@ -40,7 +42,11 @@ public class ReportingController: ControllerBase
     [ProducesDefaultResponseType]
     public async Task<IActionResult> GetFileByReportId(Guid reportId)
     {
+        _logger.LogInformation( "GetFileByReportId requested for report ID: {reportId}", reportId);
+
         var result = await _reportRepository.GetFileByReportId(reportId);
+        
+
         return Ok(result);
     }
     
@@ -50,6 +56,7 @@ public class ReportingController: ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTransaction(Guid id)
     {
+        _logger.LogError( "DeleteTransaction requested for transaction ID: {id}", id);
         if (id == Guid.Empty)
         {
             _logger.LogError("Invalid transaction ID");

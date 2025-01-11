@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
 using Reporting.API;
+using Reporting.API.Data;
 using Reporting.API.EventBusConsumer;
 using Reporting.API.Repositories;
 using Reporting.API.Repositories.Interfaces;
-using Transaction.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,13 +50,28 @@ builder.Services.AddDbContext<CombinedContext>(options =>
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 
 // RABBITMQ
-builder.Services.AddSingleton<IConnectionFactory>(sp => new ConnectionFactory
+builder.Services.AddSingleton<IConnectionFactory>(sp =>
 {
-    HostName = "localhost",
-    UserName = "guest",
-    Password = "guest",
-    Port = 5672
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var rabbitMqConfig = configuration.GetSection("RabbitMQ");
+
+    // Create the URI using UriBuilder
+    var uriBuilder = new UriBuilder
+    {
+        Scheme = "amqp", // RabbitMQ uses amqp for protocol
+        Host = rabbitMqConfig["HostName"], // HostName from configuration
+        Port = int.Parse(rabbitMqConfig["Port"]), // Port from configuration
+        UserName = rabbitMqConfig["UserName"], // UserName from configuration
+        Password = rabbitMqConfig["Password"] // Password from configuration
+    };
+
+    // Return the ConnectionFactory using the URI
+    return new ConnectionFactory
+    {
+        Uri = uriBuilder.Uri // Set the Uri property
+    };
 });
+
 
 builder.Services.AddTransient<Consumer>();
 builder.Services.AddScoped<MessageHandler>();
