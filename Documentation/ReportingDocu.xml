@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Reporting.API</name>
+    </assembly>
+    <members>
+        <member name="M:Reporting.API.Controllers.ReportingController.GetByAccountId(System.String)">
+            <summary>
+            Retrieves a list of reports associated with the specified account ID.
+            </summary>
+            <param name="accountId">The unique identifier for the account whose reports are to be retrieved.</param>
+            <returns>A list of reports associated with the specified account ID.</returns>
+            <response code="200">Returns the list of reports for the specified account.</response>
+            <response code="400">The request is invalid due to a bad account ID.</response>
+            <response code="403">The user does not have permission to access the report data.</response>
+            <response code="404">The specified account was not found.</response>
+            <response code="500">An internal server error occurred while retrieving the reports.</response>
+        </member>
+        <member name="M:Reporting.API.Controllers.ReportingController.GetFileByReportId(System.Guid)">
+            <summary>
+            Retrieves a file associated with the specified report ID.
+            </summary>
+            <param name="reportId">The unique identifier for the report whose file is to be retrieved.</param>
+            <returns>The file associated with the specified report.</returns>
+            <response code="200">Returns the file associated with the specified report ID.</response>
+            <response code="400">The request is invalid due to a bad report ID.</response>
+            <response code="403">The user does not have permission to access the report file.</response>
+            <response code="404">The specified report was not found.</response>
+            <response code="500">An internal server error occurred while retrieving the report file.</response>
+        </member>
+        <member name="M:Reporting.API.Controllers.ReportingController.DeleteTransaction(System.Guid)">
+            <summary>
+            Deletes the report associated with the specified ID.
+            </summary>
+            <param name="id">The unique identifier for the report to be deleted.</param>
+            <returns>A response indicating whether the report was successfully deleted or not.</returns>
+            <response code="204">The report was successfully deleted.</response>
+            <response code="400">The request is invalid due to a bad report ID.</response>
+            <response code="404">The specified report was not found.</response>
+            <response code="500">An internal server error occurred while attempting to delete the report.</response>
+        </member>
+    </members>
+</doc>

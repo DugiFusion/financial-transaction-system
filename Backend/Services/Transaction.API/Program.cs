@@ -78,6 +78,13 @@ builder.Services.AddSingleton<IConnectionFactory>(sp =>
 
 
 builder.Services.AddControllers();
+
+
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFile = Path.Combine(AppContext.BaseDirectory, "TransactionDocu.xml");
+    options.IncludeXmlComments(xmlFile);
+});
 builder.Services.AddSwaggerGen(s =>
 {
     s.SwaggerDoc("v1", new OpenApiInfo { Title = "Transaction.API", Version = "v1" });

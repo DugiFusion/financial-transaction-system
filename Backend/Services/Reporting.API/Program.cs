@@ -72,6 +72,14 @@ builder.Services.AddSingleton<IConnectionFactory>(sp =>
     };
 });
 
+// Documentation
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFile = Path.Combine(AppContext.BaseDirectory, "ReportingDocu.xml");
+    options.IncludeXmlComments(xmlFile);
+});
+
+
 
 builder.Services.AddTransient<Consumer>();
 builder.Services.AddScoped<MessageHandler>();

@@ -6,6 +6,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
         <RootNamespace>Transaction</RootNamespace>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DocumentationFile>bin\Debug\net9.0\TransactionDocu.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
