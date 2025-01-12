@@ -78,6 +78,7 @@ builder.Services.AddSingleton<IConnectionFactory>(sp =>
 
 
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks();
 
 
 builder.Services.AddSwaggerGen(options =>
@@ -104,7 +105,25 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigin");
 
 
-app.MapControllers();
+// app.MapControllers();
+// app.UseHealthChecks("/health");
+// app.UseHealthChecks("/readiness");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/health", async context =>
+    {
+        await context.Response.WriteAsync("Healthy");
+    });
+
+    endpoints.MapGet("/readiness", async context =>
+    {
+        await context.Response.WriteAsync("Ready");
+    });
+
+    endpoints.MapControllers();
+});
+
 
 app.UseHttpsRedirection();
 

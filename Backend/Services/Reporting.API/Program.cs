@@ -85,6 +85,9 @@ builder.Services.AddTransient<Consumer>();
 builder.Services.AddScoped<MessageHandler>();
 
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks();
+
+
 builder.Services.AddSwaggerGen(s =>
 {
     s.SwaggerDoc("v1", new OpenApiInfo { Title = "Reporting.API", Version = "v1" });
@@ -103,6 +106,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
+app.UseHealthChecks("/health");
+
 
 app.UseHttpsRedirection();
 

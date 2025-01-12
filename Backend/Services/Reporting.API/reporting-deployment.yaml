@@ -23,6 +23,24 @@ spec:
           image: dugi888/reporting-service:latest  # Your Docker image repository
           ports:
             - containerPort: 8087  # Port where the service will run
+          livenessProbe:
+            httpGet:
+              path: /api/v1/transaction/health
+              port: 8086
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /api/v1/transaction/readiness
+              port: 8086
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+            successThreshold: 1
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Production"  # Set the environment to production
