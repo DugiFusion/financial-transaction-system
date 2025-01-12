@@ -1,15 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{DB55B397-2837-44D6-B40A-4493F673B889}"
-	ProjectSection(SolutionItems) = preProject
-		Backend\Services\Transactions.Tests\obj\project.assets.json = Backend\Services\Transactions.Tests\obj\project.assets.json
-		Backend\Services\Transactions.Tests\obj\project.nuget.cache = Backend\Services\Transactions.Tests\obj\project.nuget.cache
-		Backend\Services\Transactions.Tests\obj\Transactions.Tests.csproj.nuget.dgspec.json = Backend\Services\Transactions.Tests\obj\Transactions.Tests.csproj.nuget.dgspec.json
-		Backend\Services\Transactions.Tests\obj\Transactions.Tests.csproj.nuget.g.props = Backend\Services\Transactions.Tests\obj\Transactions.Tests.csproj.nuget.g.props
-		Backend\Services\Transactions.Tests\obj\Transactions.Tests.csproj.nuget.g.targets = Backend\Services\Transactions.Tests\obj\Transactions.Tests.csproj.nuget.g.targets
-		Backend\Services\Transactions.Tests\TransactionControllerTest.cs = Backend\Services\Transactions.Tests\TransactionControllerTest.cs
-		Backend\Services\Transactions.Tests\Transactions.Tests.csproj = Backend\Services\Transactions.Tests\Transactions.Tests.csproj
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{16529D3A-3390-4276-8C71-0163CC6EAA48}"
 EndProject

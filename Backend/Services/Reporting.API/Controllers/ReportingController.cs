@@ -80,13 +80,13 @@ public class ReportingController : ControllerBase
     /// <response code="404">The specified report was not found.</response>
     /// <response code="500">An internal server error occurred while attempting to delete the report.</response>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteTransaction(Guid id)
+    public async Task<IActionResult> DeleteReport(Guid id)
     {
-        _logger.LogError("DeleteTransaction requested for transaction ID: {id}", id);
+        _logger.LogError("DeleteReport requested for transaction ID: {id}", id);
         if (id == Guid.Empty)
         {
-            _logger.LogError("Invalid transaction ID");
-            return BadRequest("Invalid transaction ID");
+            _logger.LogError("Invalid report ID");
+            return BadRequest("Invalid report ID");
         }
 
         var result = await _reportRepository.DeleteReport(id);
