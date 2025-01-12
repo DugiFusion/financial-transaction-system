@@ -1,12 +1,8 @@
-
+using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Text;
-using System.Text.Json;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Reporting.API.EventBusConsumer;
-
 
 public class Consumer
 {
@@ -21,7 +17,7 @@ public class Consumer
     {
         var connection = await _connectionFactory.CreateConnectionAsync();
         var channel = await connection.CreateChannelAsync();
-        await channel.QueueDeclareAsync(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+        await channel.QueueDeclareAsync(queueName, false, false, false, null);
 
         var consumer = new AsyncEventingBasicConsumer(channel);
         consumer.ReceivedAsync += async (model, ea) =>
@@ -31,6 +27,6 @@ public class Consumer
             await handleMessage(message);
         };
 
-        await channel.BasicConsumeAsync(queue: queueName, autoAck: true, consumer: consumer);
+        await channel.BasicConsumeAsync(queueName, true, consumer);
     }
 }

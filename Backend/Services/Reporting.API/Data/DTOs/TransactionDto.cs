@@ -10,7 +10,9 @@ public class TransactionDto
     public string CustomerId { get; set; } // Customer PAN
     public double Amount { get; set; }
     public DateTime CreatedDate { get; set; }
+
     [JsonConverter(typeof(TransactionTypeConverter))]
     public TransactionType Type { get; set; }
+
     public string? Note { get; set; }
 }

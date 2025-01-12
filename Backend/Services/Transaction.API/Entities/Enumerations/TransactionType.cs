@@ -1,8 +1,7 @@
-namespace Transactions.Entities.Enumerations
+namespace Transactions.Entities.Enumerations;
+
+public enum TransactionType
 {
-    public enum TransactionType
-    {
-        Deposit,
-        Withdraw
-    }
+    Deposit,
+    Withdraw
 }

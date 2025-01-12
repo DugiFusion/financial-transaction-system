@@ -1,4 +1,3 @@
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Reporting.API.Entities.Enumerations;
@@ -12,18 +11,12 @@ public class TransactionTypeConverter : JsonConverter<TransactionType>
         if (reader.TokenType == JsonTokenType.String)
         {
             var stringValue = reader.GetString();
-            if (Enum.TryParse<TransactionType>(stringValue, out var result))
-            {
-                return result;
-            }
+            if (Enum.TryParse<TransactionType>(stringValue, out var result)) return result;
         }
         else if (reader.TokenType == JsonTokenType.Number)
         {
             var intValue = reader.GetInt32();
-            if (Enum.IsDefined(typeof(TransactionType), intValue))
-            {
-                return (TransactionType)intValue;
-            }
+            if (Enum.IsDefined(typeof(TransactionType), intValue)) return (TransactionType)intValue;
         }
 
         throw new JsonException($"Unable to convert {reader.GetString()} to TransactionType.");

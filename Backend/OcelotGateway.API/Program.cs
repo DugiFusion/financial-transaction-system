@@ -1,4 +1,3 @@
-using Microsoft.OpenApi.Models;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -16,11 +15,8 @@ Console.WriteLine($"**********************************************************\n
 
 
 builder.Configuration
-    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-
-
-
+    .AddJsonFile("ocelot.json", false, true)
+    .AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", true, true);
 
 
 //builder.Configuration.AddJsonFile($"ocelot.json", optional: false, true);
@@ -37,21 +33,14 @@ builder.Services.AddCors(options =>
 });
 
 
-
 builder.Services.AddOcelot(builder.Configuration)
-    .AddCacheManager(x =>
-    {
-        x.WithDictionaryHandle();
-    });
+    .AddCacheManager(x => { x.WithDictionaryHandle(); });
 
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
+if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
 
 app.UseHttpsRedirection();
@@ -61,7 +50,6 @@ app.UseRouting();
 app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
-
 
 
 await app.UseOcelot();

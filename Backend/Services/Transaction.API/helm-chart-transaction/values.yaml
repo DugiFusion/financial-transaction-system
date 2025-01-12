@@ -49,7 +49,7 @@ volumeMounts:
   - name: app-settings
     mountPath: appsettings.Production.json
     subPath: appsettings.Production.json
-    
+
 serviceAccount:
   create: true
   name: ""

@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
@@ -20,12 +15,9 @@ Console.WriteLine($"**********************************************************\n
                   $"**********************************************************\n");
 
 
-
-
-
 builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+    .AddJsonFile("appsettings.json", false, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
 
 
 // Add services to the container.
@@ -47,10 +39,7 @@ builder.Services.AddCors(options =>
 
 
 var connectionString = builder.Configuration.GetConnectionString("TransactionDatabase");
-builder.Services.AddDbContext<TransactionContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
+builder.Services.AddDbContext<TransactionContext>(options => { options.UseSqlServer(connectionString); });
 
 
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
@@ -58,7 +47,7 @@ builder.Services.AddScoped<TransactionContext>();
 
 
 // Producer
-builder.Services.AddSingleton<Transactions.EventBusProducer.Producer>();
+builder.Services.AddSingleton<Producer>();
 
 
 // RABBITMQ
@@ -66,7 +55,7 @@ builder.Services.AddSingleton<IConnectionFactory>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
     var rabbitMqConfig = configuration.GetSection("RabbitMQ");
-    
+
     return new ConnectionFactory
     {
         HostName = rabbitMqConfig["HostName"],
@@ -105,29 +94,27 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigin");
 
 
-// app.MapControllers();
-// app.UseHealthChecks("/health");
-// app.UseHealthChecks("/readiness");
+app.MapControllers();
+app.UseHealthChecks("/health");
+app.UseHealthChecks("/readiness");
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapGet("/health", async context =>
-    {
-        await context.Response.WriteAsync("Healthy");
-    });
-
-    endpoints.MapGet("/readiness", async context =>
-    {
-        await context.Response.WriteAsync("Ready");
-    });
-
-    endpoints.MapControllers();
-});
+// app.UseEndpoints(endpoints =>
+// {
+//     endpoints.MapGet("/health", async context =>
+//     {
+//         await context.Response.WriteAsync("Healthy");
+//     });
+//
+//     endpoints.MapGet("/readiness", async context =>
+//     {
+//         await context.Response.WriteAsync("Ready");
+//     });
+//
+//     endpoints.MapControllers();
+// });
 
 
 app.UseHttpsRedirection();
 
 
-
 app.Run();
-
