@@ -3,11 +3,11 @@
     "BaseUrl": "http://localhost:5000"
   },
   "Routes": [
-
     {
       "UpstreamPathTemplate": "/gateway/transaction/{accountId}",
-      "UpstreamHttpMethod": [ "GET" ],
-
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
       "DownstreamPathTemplate": "/api/v1/Transaction/{accountId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -17,14 +17,14 @@
         }
       ],
       "FileCacheOptions": {
-      "TtlSeconds": 1
-    }
-
+        "TtlSeconds": 1
+      }
     },
     {
       "UpstreamPathTemplate": "/gateway/transaction/send-message",
-      "UpstreamHttpMethod": [ "POST" ],
-
+      "UpstreamHttpMethod": [
+        "POST"
+      ],
       "DownstreamPathTemplate": "/api/v1/Transaction/send-message",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -36,28 +36,29 @@
       "FileCacheOptions": {
         "TtlSeconds": 1
       }
-
     },
     {
-      
-        "UpstreamPathTemplate": "/gateway/transaction", 
-        "UpstreamHttpMethod": [ "POST" ],
-    
-        "DownstreamPathTemplate": "/api/v1/Transaction",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-            "Host": "localhost",
-            "Port": "5001"
-            }
-        ],
+      "UpstreamPathTemplate": "/gateway/transaction",
+      "UpstreamHttpMethod": [
+        "POST"
+      ],
+      "DownstreamPathTemplate": "/api/v1/Transaction",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
       "FileCacheOptions": {
         "TtlSeconds": 1
       }
     },
     {
       "UpstreamPathTemplate": "/gateway/transaction/{transactionId}",
-      "UpstreamHttpMethod": [ "DELETE" ],
+      "UpstreamHttpMethod": [
+        "DELETE"
+      ],
       "DownstreamPathTemplate": "/api/v1/Transaction/{transactionId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -70,12 +71,13 @@
         "TtlSeconds": 1
       }
     },
-    
     // Reporting
 
     {
       "UpstreamPathTemplate": "/gateway/reporting/{accountId}",
-      "UpstreamHttpMethod": ["GET"],
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
       "DownstreamPathTemplate": "/api/v1/Reporting/{accountId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -90,7 +92,9 @@
     },
     {
       "UpstreamPathTemplate": "/gateway/reporting/getFile/{reportId}",
-      "UpstreamHttpMethod": ["GET"],
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
       "DownstreamPathTemplate": "/api/v1/Reporting/getFile/{reportId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -103,10 +107,11 @@
         "TtlSeconds": 1
       }
     },
-
     {
       "UpstreamPathTemplate": "/gateway/reporting/{id}",
-      "UpstreamHttpMethod": [ "DELETE" ],
+      "UpstreamHttpMethod": [
+        "DELETE"
+      ],
       "DownstreamPathTemplate": "/api/v1/reporting/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -118,8 +123,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 1
       }
-      
     }
-    
   ]
 }

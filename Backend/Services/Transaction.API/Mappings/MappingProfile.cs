@@ -1,5 +1,6 @@
-using Transaction.Data.DTOs;
 using AutoMapper;
+using Transaction.Data.DTOs;
+
 namespace Transactions.Mappings;
 
 public class MappingProfile : Profile
@@ -14,6 +15,5 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate));
-        
     }
 }

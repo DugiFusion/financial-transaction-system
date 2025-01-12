@@ -1,0 +1,55 @@
+replicaCount: 1
+
+nameOverride: transaction-service
+
+image:
+  repository: dugi888/transaction-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8086
+
+probes:
+  liveness:
+    path: /api/v1/transaction/health
+    port: 8086
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  readiness:
+    path: /api/v1/transaction/readiness
+    port: 8086
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 3
+    successThreshold: 1
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
+environment:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_URLS: "http://+:8086"
+
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"
+    effect: "NoSchedule"
+
+configMapName: transaction-service-config
+volumeMounts:
+  - name: app-settings
+    mountPath: appsettings.Production.json
+    subPath: appsettings.Production.json
+
+serviceAccount:
+  create: true
+  name: ""

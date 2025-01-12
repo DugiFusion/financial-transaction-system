@@ -1,6 +1,6 @@
-using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
+using RabbitMQ.Client;
 
 namespace Transactions.EventBusProducer;
 
@@ -19,11 +19,10 @@ public class Producer
         using var connection = await _connectionFactory.CreateConnectionAsync();
         using var channel = await connection.CreateChannelAsync();
 
-        await channel.QueueDeclareAsync(queue: queueName, durable: false, exclusive: false, autoDelete: false,
-            arguments: null);
+        await channel.QueueDeclareAsync(queueName, false, false, false,
+            null);
 
         var messageBody = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
-        await channel.BasicPublishAsync(exchange: "", routingKey: queueName, body: messageBody);
+        await channel.BasicPublishAsync("", queueName, messageBody);
     }
-
 }

@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
@@ -19,8 +16,8 @@ Console.WriteLine($"**********************************************************\n
                   $"**********************************************************\n");
 
 builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+    .AddJsonFile("appsettings.json", false, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
 
 builder.Services.AddOpenApi();
 
@@ -34,18 +31,9 @@ builder.Services.AddCors(options =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("ReportingDatabase");
-builder.Services.AddDbContext<ReportsContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
-builder.Services.AddDbContext<ReportFilesContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
-builder.Services.AddDbContext<CombinedContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
+builder.Services.AddDbContext<ReportsContext>(options => { options.UseSqlServer(connectionString); });
+builder.Services.AddDbContext<ReportFilesContext>(options => { options.UseSqlServer(connectionString); });
+builder.Services.AddDbContext<CombinedContext>(options => { options.UseSqlServer(connectionString); });
 
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 
@@ -80,11 +68,13 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 
-
 builder.Services.AddTransient<Consumer>();
 builder.Services.AddScoped<MessageHandler>();
 
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks();
+
+
 builder.Services.AddSwaggerGen(s =>
 {
     s.SwaggerDoc("v1", new OpenApiInfo { Title = "Reporting.API", Version = "v1" });
@@ -103,6 +93,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
+app.UseHealthChecks("/health");
+
 
 app.UseHttpsRedirection();
 
@@ -115,7 +107,6 @@ var rabbitMqConsumer = scopedServices.GetRequiredService<Consumer>();
 var messageHandler = scopedServices.GetRequiredService<MessageHandler>();
 
 rabbitMqConsumer.StartConsuming("transactionQueue", messageHandler.HandleMessage);
-
 
 
 app.Run();

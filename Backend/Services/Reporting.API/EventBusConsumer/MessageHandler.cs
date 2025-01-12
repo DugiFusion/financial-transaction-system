@@ -2,9 +2,7 @@ using System.Text.Json;
 using Reporting.API.Data.DTOs;
 using Reporting.API.Repositories.Interfaces;
 
-
 namespace Reporting.API.EventBusConsumer;
-
 
 public class MessageHandler
 {
@@ -18,10 +16,7 @@ public class MessageHandler
     public async Task<int> HandleMessage(string message)
     {
         var transactions = JsonSerializer.Deserialize<List<TransactionDto>>(message);
-        if (transactions == null)
-        {
-            throw new Exception("Invalid message format.");
-        } 
+        if (transactions == null) throw new Exception("Invalid message format.");
         return await _reportRepository.CreateReport(transactions.ToArray());
     }
 }

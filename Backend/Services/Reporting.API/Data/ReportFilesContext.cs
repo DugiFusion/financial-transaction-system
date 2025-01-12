@@ -3,14 +3,14 @@ using Reporting.API.Entities;
 
 namespace Reporting.API.Data;
 
-public class ReportFilesContext:DbContext
+public class ReportFilesContext : DbContext
 {
-    public DbSet<ReportFile> ReportFiles { get; set; }
     public ReportFilesContext(DbContextOptions<ReportFilesContext> options) : base(options)
     {
-            
-            
     }
+
+    public DbSet<ReportFile> ReportFiles { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ReportFile>()

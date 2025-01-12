@@ -1,31 +1,31 @@
 using System.Text;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Reporting.API.Entities;
-using Reporting.API.Repositories.Interfaces;
 using Reporting.API.Data;
 using Reporting.API.Data.DTOs;
+using Reporting.API.Entities;
+using Reporting.API.Repositories.Interfaces;
 using TransactionDto = Reporting.API.Data.DTOs.TransactionDto;
 
 namespace Reporting.API.Repositories;
 
 public class ReportRepository : IReportRepository
 {
-    private readonly ReportsContext _reportsContext;
-    private readonly ReportFilesContext _reportFilesContext;
     private readonly CombinedContext _context;
     private readonly ILogger<ReportRepository> _logger;
+    private readonly ReportFilesContext _reportFilesContext;
+    private readonly ReportsContext _reportsContext;
 
-    
-    public ReportRepository(ReportsContext reportsContext, ReportFilesContext reportFilesContext, CombinedContext context, ILogger<ReportRepository> logger)
+
+    public ReportRepository(ReportsContext reportsContext, ReportFilesContext reportFilesContext,
+        CombinedContext context, ILogger<ReportRepository> logger)
     {
         _reportsContext = reportsContext;
         _reportFilesContext = reportFilesContext;
         _context = context;
         _logger = logger;
     }
-     
+
     public async Task<IEnumerable<Report>> GetByAccountId(string accountId)
     {
         _logger.LogInformation("Repository request for account ID: {accountId}", accountId);
@@ -33,7 +33,7 @@ public class ReportRepository : IReportRepository
             .Where(x => x.AccountId == accountId)
             .ToListAsync();
     }
-    
+
     public async Task<IActionResult> GetFileByReportId(Guid reportId)
     {
         _logger.LogInformation("Repository request for report ID: {reportId}", reportId);
@@ -54,13 +54,14 @@ public class ReportRepository : IReportRepository
         return new FileContentResult(fileDto.Data, "application/octet-stream")
         {
             FileDownloadName = fileDto.Name
-        };    
+        };
     }
+
     public async Task<int> CreateReport(TransactionDto[] reportDto)
     {
         _logger.LogInformation("Repository request for creating report!");
 
-        Guid reportId = Guid.NewGuid();
+        var reportId = Guid.NewGuid();
         var newReport = new Report
         {
             Id = reportId,
@@ -72,10 +73,11 @@ public class ReportRepository : IReportRepository
         var csvContent = new StringBuilder();
         csvContent.AppendLine("#,Id,AccountId,CustomerId,Amount,Type,Note,CreatedDate");
 
-        int counter = 1;
+        var counter = 1;
         foreach (var transaction in reportDto)
         {
-            csvContent.AppendLine($"{counter},{transaction.Id},{transaction.AccountId},{transaction.CustomerId},{transaction.Amount},{transaction.Type},{transaction.Note},{transaction.CreatedDate}");
+            csvContent.AppendLine(
+                $"{counter},{transaction.Id},{transaction.AccountId},{transaction.CustomerId},{transaction.Amount},{transaction.Type},{transaction.Note},{transaction.CreatedDate}");
             counter++;
         }
 
@@ -94,27 +96,21 @@ public class ReportRepository : IReportRepository
         _reportFilesContext.ReportFiles.Add(reportFile);
         return await _reportFilesContext.SaveChangesAsync();
     }
-    
-    
+
+
     public async Task<int> DeleteReport(Guid id)
     {
         var report = await _reportsContext.Reports
             .FirstOrDefaultAsync(x => x.Id == id);
 
-        if (report == null)
-        {
-            return 0;
-        }
+        if (report == null) return 0;
 
-        _reportsContext.Reports.Remove(report); 
+        _reportsContext.Reports.Remove(report);
         await _reportsContext.SaveChangesAsync();
-        
+
         var reportFile = await _reportFilesContext.ReportFiles
             .FirstOrDefaultAsync(x => x.ReportId == id);
-        if (reportFile == null)
-        {
-            return 0;
-        }
+        if (reportFile == null) return 0;
 
         _reportFilesContext.ReportFiles.Remove(reportFile);
         return await _reportFilesContext.SaveChangesAsync();
