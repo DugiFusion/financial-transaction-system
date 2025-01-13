@@ -15,7 +15,7 @@ probes:
   liveness:
     path: /api/v1/transaction/health
     port: 8086
-    initialDelaySeconds: 10
+    initialDelaySeconds: 60
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 3
@@ -23,7 +23,7 @@ probes:
   readiness:
     path: /api/v1/transaction/readiness
     port: 8086
-    initialDelaySeconds: 5
+    initialDelaySeconds: 60
     periodSeconds: 5
     timeoutSeconds: 2
     failureThreshold: 3

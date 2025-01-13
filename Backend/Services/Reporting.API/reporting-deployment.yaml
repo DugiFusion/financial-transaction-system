@@ -27,8 +27,8 @@ spec:
             httpGet:
               path: /api/v1/reporting/health
               port: 8086
-            initialDelaySeconds: 10
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 20
             timeoutSeconds: 5
             failureThreshold: 3
             successThreshold: 1
@@ -36,8 +36,8 @@ spec:
             httpGet:
               path: /api/v1/reporting/readiness
               port: 8086
-            initialDelaySeconds: 5
-            periodSeconds: 5
+            initialDelaySeconds: 60
+            periodSeconds: 20
             timeoutSeconds: 2
             failureThreshold: 3
             successThreshold: 1
