@@ -20,12 +20,12 @@ spec:
           effect: "NoSchedule"
       containers:
         - name: reporting-api
-          image: dugi888/reporting-service:latest  # Your Docker image repository
+          image: dugi888/reporting-service:latest  
           ports:
             - containerPort: 8087  # Port where the service will run
           livenessProbe:
             httpGet:
-              path: /api/v1/transaction/health
+              path: /api/v1/reporting/health
               port: 8086
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -34,7 +34,7 @@ spec:
             successThreshold: 1
           readinessProbe:
             httpGet:
-              path: /api/v1/transaction/readiness
+              path: /api/v1/reporting/readiness
               port: 8086
             initialDelaySeconds: 5
             periodSeconds: 5
@@ -53,7 +53,7 @@ spec:
       volumes:
         - name: app-settings
           configMap:
-            name: reporting-service-config  # The ConfigMap holding the config files
+            name: reporting-service-config  
 
 ---
 apiVersion: v1
@@ -66,5 +66,5 @@ spec:
   ports:
     - protocol: TCP
       port: 8087
-      targetPort: 8087  # Port the container is listening on
-  type: ClusterIP  # Exposes the service inside the cluster
+      targetPort: 8087 
+  type: ClusterIP  
