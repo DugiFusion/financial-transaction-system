@@ -7,7 +7,7 @@ A cloud-based banking application designed to manage transactions efficiently. B
 
 ## **Features**
 - **Transaction Management**: Create, view, and manage transactions.
-- **Report Management**: Create transaction reports.
+- **Report Management**: Create transaction reports and download them.
 - **REST API**: A fully documented RESTful API for all operations.
 - **Cloud Deployment**: Hosted on Microsoft Azure for scalability.
 - **Frontend**: Built with Angular for an intuitive user interface.
